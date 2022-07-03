@@ -30,7 +30,7 @@ const SignUp = ({navigation}) => {
           text={'Daftar'}
           color={'#0050FF'}
           textColor={'#FFFFFF'}
-          onPress={() => {}}
+          onPress={() => navigation.replace('MainApp')}
         />
       </View>
       {/* </ScrollView> */}
