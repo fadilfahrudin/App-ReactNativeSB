@@ -1,7 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {IcBack} from '../../../asset/Icon';
-import {Gap} from '../../atoms';
+import {LogoHeader} from '../../../asset/Illustration';
+import Svg from 'react-native-svg';
 
 const Header = ({title, subTitle, onBack, onPress}) => {
   return (
