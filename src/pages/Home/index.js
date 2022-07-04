@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import {DummyUser, LogoHeader} from '../../asset';
+import {ProgramCard} from '../../components';
 
 const Home = () => {
   return (
@@ -11,7 +12,11 @@ const Home = () => {
           <Image source={DummyUser} style={styles.profile} />
         </View>
       </View>
-      <Text>Home</Text>
+      <View>
+        <ProgramCard />
+        <ProgramCard />
+        <ProgramCard />
+      </View>
     </View>
   );
 };
