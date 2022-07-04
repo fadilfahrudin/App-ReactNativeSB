@@ -1,3 +1,4 @@
 import Banner from './banner.jpg';
 import DummyUser from './DumyUser.png';
-export {Banner, DummyUser};
+import DummyProgram from './DummyProgram.jpg';
+export {Banner, DummyUser, DummyProgram};
