@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import React from 'react';
-import {DummyUser, LogoHeader} from '../../asset';
-import {ProgramCard} from '../../components';
+import {DummyUser, DummyProgram, LogoHeader} from '../../asset';
+import {Gap, ProgramCard} from '../../components';
 
 const Home = () => {
   return (
@@ -12,11 +12,14 @@ const Home = () => {
           <Image source={DummyUser} style={styles.profile} />
         </View>
       </View>
-      <View>
-        <ProgramCard />
-        <ProgramCard />
-        <ProgramCard />
-      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View style={styles.programCardContainer}>
+          <Gap width={16} />
+          <ProgramCard image={DummyProgram} />
+          <ProgramCard image={DummyProgram} />
+          <ProgramCard image={DummyProgram} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -31,6 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  programCardContainer: {flexDirection: 'row'},
   profileFrame: {
     borderRadius: 8,
     backgroundColor: 'white',
