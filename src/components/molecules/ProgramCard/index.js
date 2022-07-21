@@ -2,7 +2,6 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import {IcCeklist} from '../../../asset';
 import * as Progress from 'react-native-progress';
-import {Gap} from '../../../components';
 
 const ProgramCard = ({image}) => {
   return (
@@ -22,9 +21,7 @@ const ProgramCard = ({image}) => {
         />
         <View style={styles.detail}>
           <Text style={styles.jml}>Rp, 1.000.000</Text>
-          <Gap width={2} />
           <Text style={styles.terkumpul}>Terkumpul</Text>
-          <Gap width={10} />
           <Text style={styles.date}>25 hari lagi</Text>
         </View>
       </View>
