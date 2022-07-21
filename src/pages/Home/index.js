@@ -1,25 +1,40 @@
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import {StyleSheet, View, Image, ScrollView} from 'react-native';
 import React from 'react';
-import {DummyUser, DummyProgram, LogoHeader} from '../../asset';
-import {Gap, ProgramCard} from '../../components';
+import {DummyProgram} from '../../asset';
+import {
+  Gap,
+  HomeProfile,
+  HomeTabSection,
+  InfoCard,
+  ProgramCard,
+} from '../../components';
 
 const Home = () => {
   return (
-    <View>
-      <View style={styles.container}>
-        <LogoHeader width={200} />
-        <View style={styles.profileFrame}>
-          <Image source={DummyUser} style={styles.profile} />
-        </View>
+    <View style={styles.page}>
+      <HomeProfile />
+      <View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.programCardContainer}>
+            <Gap width={16} />
+            <ProgramCard image={DummyProgram} />
+            <ProgramCard image={DummyProgram} />
+            <ProgramCard image={DummyProgram} />
+          </View>
+        </ScrollView>
       </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.programCardContainer}>
-          <Gap width={16} />
-          <ProgramCard image={DummyProgram} />
-          <ProgramCard image={DummyProgram} />
-          <ProgramCard image={DummyProgram} />
-        </View>
-      </ScrollView>
+      <View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.infoCardContainer}>
+            <InfoCard />
+            <InfoCard />
+            <InfoCard />
+          </View>
+        </ScrollView>
+      </View>
+      <View style={styles.tabContainer}>
+        <HomeTabSection />
+      </View>
     </View>
   );
 };
@@ -27,22 +42,8 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    height: 108,
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+  page: {flexGrow: 1},
+  tabContainer: {flex: 1},
   programCardContainer: {flexDirection: 'row'},
-  profileFrame: {
-    borderRadius: 8,
-    backgroundColor: 'white',
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 24,
-  },
-  profile: {width: 50, height: 50},
+  infoCardContainer: {flexDirection: 'row', marginLeft: 10, marginBottom: 20},
 });
