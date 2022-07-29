@@ -2,27 +2,30 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import {IcCeklist} from '../../../asset';
 import * as Progress from 'react-native-progress';
+import {Gap} from '../../atoms';
 
-const ProgramCard = ({image}) => {
+const ProgramCard = ({image, judul, nominal, date, by, progress}) => {
   return (
     <View style={styles.container}>
       <Image source={image} style={styles.image} />
       <View style={styles.body}>
-        <Text style={styles.judul}>Semangat Sedekah Subuh</Text>
+        <Text style={styles.judul}>{judul}</Text>
         <View style={styles.pemilikProgram}>
-          <Text style={styles.lembaga}>Semangatbantu.com</Text>
+          <Text style={styles.lembaga}>{by}</Text>
           <IcCeklist style={styles.ceklist} />
         </View>
         <Progress.Bar
-          progress={0.3}
+          progress={progress}
           width={175}
           height={3}
           color={'rgba(0, 80, 255, 1)'}
         />
         <View style={styles.detail}>
-          <Text style={styles.jml}>Rp, 1.000.000</Text>
+          <Text style={styles.jml}>Rp,{nominal}</Text>
+          <Gap width={2} />
           <Text style={styles.terkumpul}>Terkumpul</Text>
-          <Text style={styles.date}>25 hari lagi</Text>
+          <Gap width={6} />
+          <Text style={styles.date}>{date} hari lagi</Text>
         </View>
       </View>
     </View>
@@ -36,6 +39,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 24,
     width: 200,
+    height: 210,
     backgroundColor: 'white',
     borderRadius: 8,
     shadowColor: 'black',
@@ -43,12 +47,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 14,
-    overflow: 'hidden',
   },
   image: {width: 200, height: 140, resizeMode: 'cover'},
   body: {
     marginHorizontal: 10,
+    width: 200,
     marginBottom: 10,
+    overflow: 'hidden',
   },
   judul: {fontSize: 11, fontFamily: 'roboto-bold', color: '#0B2B72'},
   pemilikProgram: {

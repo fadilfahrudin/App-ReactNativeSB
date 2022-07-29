@@ -1,26 +1,25 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import * as Progress from 'react-native-progress';
-import {DummyProgram} from '../../../asset';
 import React from 'react';
 
-const TabProgram = () => {
+const TabProgram = ({judul, image, progress, nominal, onPress}) => {
   return (
-    <View style={styles.container}>
-      <Image source={DummyProgram} style={styles.image} />
-      <View style={styles.containerBody}>
-        <Text style={styles.judul}>
-          Bersama Semangat Bantu Selamatkan Al-Quds #savePalestina
-        </Text>
-        <Progress.Bar
-          progress={0.3}
-          width={250}
-          height={3}
-          color={'rgba(0, 80, 255, 1)'}
-        />
-        <Text style={styles.terkumpul}>Terkumpul</Text>
-        <Text style={styles.nominal}>Rp10.000.000</Text>
+    <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+      <View style={styles.container}>
+        <Image source={image} style={styles.image} />
+        <View style={styles.containerBody}>
+          <Text style={styles.judul}>{judul}</Text>
+          <Progress.Bar
+            progress={progress}
+            width={250}
+            height={3}
+            color={'rgba(0, 80, 255, 1)'}
+          />
+          <Text style={styles.terkumpul}>Terkumpul</Text>
+          <Text style={styles.nominal}>Rp.{nominal}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

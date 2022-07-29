@@ -7,6 +7,7 @@ import {
   Home,
   DonasiSaya,
   Profile,
+  ProgramDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -49,6 +50,11 @@ const Router = () => {
       <Stack.Screen
         name="MainApp"
         component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ProgramDetail"
+        component={ProgramDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

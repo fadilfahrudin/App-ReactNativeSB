@@ -5,5 +5,15 @@ import SuccessSignUp from './SuccessSignUp';
 import Home from './Home';
 import Profile from './Profile';
 import DonasiSaya from './DonasiSaya';
+import ProgramDetail from './ProgramDetail';
 
-export {SplashScreen, SignIn, SignUp, SuccessSignUp, Home, Profile, DonasiSaya};
+export {
+  SplashScreen,
+  SignIn,
+  SignUp,
+  SuccessSignUp,
+  Home,
+  Profile,
+  DonasiSaya,
+  ProgramDetail,
+};
