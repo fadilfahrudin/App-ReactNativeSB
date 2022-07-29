@@ -7,7 +7,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {DummyProgram} from '../../../asset';
 import TabProgram from '../TabProgram';
+import {useNavigation} from '@react-navigation/native';
 
 const renderTabBar = props => (
   <TabBar
@@ -32,17 +34,55 @@ const renderTabBar = props => (
   />
 );
 const programPilihan = () => {
+  const navigation = useNavigation();
+
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
-      <TabProgram />
-      <TabProgram />
-      <TabProgram />
+      <TabProgram
+        onPress={() => navigation.navigate('ProgramDetail')}
+        judul="Bersama Semangat Bantu Selamatkan Al-Quds #savePalestina"
+        image={DummyProgram}
+        progress={0.3}
+        nominal="1.000.000"
+      />
+      <TabProgram
+        onPress={() => navigation.navigate('ProgramDetail')}
+        judul="Semangat Sedekah Subuh"
+        image={DummyProgram}
+        progress={0.1}
+        nominal="10.000.000"
+      />
+      <TabProgram
+        onPress={() => navigation.navigate('ProgramDetail')}
+        judul="Bantu Berikan Senyum Yatim"
+        image={DummyProgram}
+        progress={1}
+        nominal="50.000.000"
+      />
     </ScrollView>
   );
 };
-const donasiRutin = () => (
-  <View style={{flex: 1, backgroundColor: '#673ab7'}} />
-);
+const donasiRutin = () => {
+  const navigation = useNavigation();
+  return (
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <TabProgram
+        onPress={() => navigation.navigate('ProgramDetail')}
+        judul="Semangat Sedekah Subuh"
+        image={DummyProgram}
+        progress={0.1}
+        nominal="10.000.000"
+      />
+      <TabProgram
+        onPress={() => navigation.navigate('ProgramDetail')}
+        judul="Bantu Berikan Senyum Yatim"
+        image={DummyProgram}
+        progress={1}
+        nominal="50.000.000"
+      />
+    </ScrollView>
+  );
+};
 
 const renderScene = SceneMap({
   1: programPilihan,

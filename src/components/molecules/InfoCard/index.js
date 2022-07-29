@@ -1,11 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const InfoCard = () => {
+const InfoCard = ({namaInfo, total}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Program Tersedia</Text>
-      <Text style={styles.isi}>24</Text>
+      <Text style={styles.title}>{namaInfo}</Text>
+      <Text style={styles.isi}>{total}</Text>
     </View>
   );
 };
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   isi: {
     fontFamily: 'roboto-bold',
     fontSize: 12,
+    fontWeight: 'bold',
     color: '#0B2B72',
     textAlign: 'right',
   },

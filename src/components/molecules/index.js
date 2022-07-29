@@ -5,6 +5,7 @@ import InfoCard from './InfoCard';
 import HomeTabSection from './HomeTabSection';
 import HomeProfile from './HomeProfile';
 import TabProgram from './TabProgram';
+import InfoTab from './Infotab';
 
 export {
   Header,
@@ -14,4 +15,5 @@ export {
   HomeTabSection,
   HomeProfile,
   TabProgram,
+  InfoTab,
 };
