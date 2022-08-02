@@ -1,6 +1,4 @@
 import {
-  DrawerLayoutAndroid,
-  DrawerLayoutAndroidComponent,
   Image,
   ImageBackground,
   SafeAreaView,
@@ -11,17 +9,19 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {DummyProgram, IcBack, IcBackWhite, IcCeklist} from '../../asset';
+import {DummyProgram, IcBackWhite, IcCeklist} from '../../asset';
 import {Button, Gap} from '../../components';
 import * as Progress from 'react-native-progress';
 
-const ProgramDetail = () => {
+const ProgramDetail = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView stickyHeaderIndices={[1]}>
         <View>
           <ImageBackground source={DummyProgram} style={styles.cover}>
-            <TouchableOpacity style={styles.icBack}>
+            <TouchableOpacity
+              style={styles.icBack}
+              onPress={() => navigation.navigate('Home')}>
               <IcBackWhite />
               <Text style={{color: 'white', marginLeft: 5}}>Kembali</Text>
             </TouchableOpacity>
@@ -118,6 +118,7 @@ const ProgramDetail = () => {
           width={200}
           elevation={5}
           height={50}
+          onPress={() => navigation.navigate('Checkout')}
         />
       </View>
     </SafeAreaView>

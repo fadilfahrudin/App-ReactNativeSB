@@ -8,6 +8,8 @@ import {
   DonasiSaya,
   Profile,
   ProgramDetail,
+  Checkout,
+  OrderSummary,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -55,6 +57,17 @@ const Router = () => {
       <Stack.Screen
         name="ProgramDetail"
         component={ProgramDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={Checkout}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="OrderSummary"
+        component={OrderSummary}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
