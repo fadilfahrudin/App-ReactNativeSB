@@ -33,7 +33,7 @@ const OrderSummary = ({navigation}) => {
         title="Intruksi Donasi"
         subTitle="Program Semangat Sedekah Subuh"
         onBack
-        onPress={() => navigation.replace('ProgramDetail')}
+        onPress={() => navigation.navigate('ProgramDetail')}
       />
 
       <View style={styles.page}>
@@ -102,7 +102,7 @@ const OrderSummary = ({navigation}) => {
 
           <View style={styles.infoProgram}>
             <TouchableOpacity
-              onPress={() => navigation.replace('ProgramDetail')}>
+              onPress={() => navigation.navigate('ProgramDetail')}>
               <Image source={DummyProgram} style={styles.img} />
             </TouchableOpacity>
             <View
@@ -111,7 +111,7 @@ const OrderSummary = ({navigation}) => {
                 width: 270,
               }}>
               <TouchableOpacity
-                onPress={() => navigation.replace('ProgramDetail')}>
+                onPress={() => navigation.navigate('ProgramDetail')}>
                 <Text style={styles.infoProgramTitle}>
                   Bersama Semangat Bantu Selamatkan Al-Quds #SavePalestine
                 </Text>
@@ -130,7 +130,7 @@ const OrderSummary = ({navigation}) => {
           <View>
             <TouchableOpacity
               style={styles.buttonEx}
-              onPress={() => navigation.replace('Home')}>
+              onPress={() => navigation.navigate('Home')}>
               <Text style={{textAlign: 'center', color: 'white'}}>
                 Lihat Program Lainnya
               </Text>

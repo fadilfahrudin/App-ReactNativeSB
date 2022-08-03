@@ -45,11 +45,6 @@ const Router = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name="MainApp"
         component={MainApp}
         options={{headerShown: false}}
