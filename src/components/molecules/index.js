@@ -6,6 +6,9 @@ import HomeTabSection from './HomeTabSection';
 import HomeProfile from './HomeProfile';
 import TabProgram from './TabProgram';
 import InfoTab from './Infotab';
+import StatusTransaksi from './StatusTransaksi';
+import ProfileTabSection from './ProfileTabSection';
+import ItemsListMenu from './ItemsListMenu';
 
 export {
   Header,
@@ -16,4 +19,7 @@ export {
   HomeProfile,
   TabProgram,
   InfoTab,
+  StatusTransaksi,
+  ProfileTabSection,
+  ItemsListMenu,
 };

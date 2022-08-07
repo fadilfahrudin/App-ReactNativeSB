@@ -33,7 +33,7 @@ const OrderSummary = ({navigation}) => {
         title="Intruksi Donasi"
         subTitle="Program Semangat Sedekah Subuh"
         onBack
-        onPress={() => navigation.navigate('ProgramDetail')}
+        onPress={() => navigation.navigate('Donasi Saya')}
       />
 
       <View style={styles.page}>
