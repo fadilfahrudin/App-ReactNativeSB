@@ -8,6 +8,9 @@ import DonasiSaya from './DonasiSaya';
 import ProgramDetail from './ProgramDetail';
 import Checkout from './Checkout';
 import OrderSummary from './OrderSummary';
+import CallApiVanilaJs from './CallApiValinaJs';
+import CallApiAxios from './CallApiAxios';
+import LocalAPI from './LocalAPI';
 
 export {
   SplashScreen,
@@ -20,4 +23,7 @@ export {
   ProgramDetail,
   Checkout,
   OrderSummary,
+  CallApiVanilaJs,
+  CallApiAxios,
+  LocalAPI,
 };

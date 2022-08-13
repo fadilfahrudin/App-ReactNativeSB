@@ -11,7 +11,10 @@ const SignIn = ({navigation}) => {
         <Gap height={16} />
         <TextInput label="Password" placeholder="Masukan password kmau" />
         <Gap height={25} />
-        <Button text="Sign In" />
+        <Button
+          text="Sign In"
+          onPress={() => navigation.navigate('LocalAPI')}
+        />
         <Gap height={12} />
         <Button
           text="Daftar"

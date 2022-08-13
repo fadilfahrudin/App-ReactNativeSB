@@ -10,6 +10,9 @@ import {
   ProgramDetail,
   Checkout,
   OrderSummary,
+  CallApiVanilaJs,
+  CallApiAxios,
+  LocalAPI,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -63,6 +66,18 @@ const Router = () => {
       <Stack.Screen
         name="OrderSummary"
         component={OrderSummary}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="CallApiAxios"
+        component={CallApiAxios}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="LocalAPI"
+        component={LocalAPI}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
