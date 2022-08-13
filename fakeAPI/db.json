@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "nama": "Syaiful Fadjri",
+      "email": "syaifulfadjri@gmail.com",
+      "job": "Fundriser",
+      "id": 4
+    },
+    {
+      "nama": "Irwan Setiono",
+      "email": "irwan@gmail.com",
+      "job": "Designer",
+      "id": 5
+    },
+    {
+      "nama": "Fadillah Fahrudin",
+      "email": "fadilfahrudin32@gmail.com",
+      "job": "Frontend",
+      "id": 6
+    }
+  ]
+}
