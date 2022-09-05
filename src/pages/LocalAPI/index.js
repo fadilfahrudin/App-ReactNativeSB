@@ -57,7 +57,7 @@ const LocalAPI = () => {
 
     if (button === 'Simpan') {
       //noted: 10.0.2.2 adalah ip hp emulator
-      Axios.post('http://10.0.2.2:3004/users', data).then(result => {
+      Axios.post('http://10.0.2.2:3000/users', data).then(result => {
         console.log('hasil dari: ', result);
         setNama('');
         setEmail('');
@@ -65,7 +65,7 @@ const LocalAPI = () => {
         getData();
       });
     } else if (button === 'Update') {
-      Axios.put(`http://10.0.2.2:3004/users/${selectedUser.id}`, data).then(
+      Axios.put(`http://10.0.2.2:3000/users/${selectedUser.id}`, data).then(
         result => {
           console.log('hasil dari: ', result);
           setNama('');
@@ -79,7 +79,7 @@ const LocalAPI = () => {
   };
 
   const getData = () => {
-    Axios.get('http://10.0.2.2:3004/users').then(result => {
+    Axios.get('http://10.0.2.2:3000/users').then(result => {
       console.log('data users :', result);
       setUsers(result.data);
     });
@@ -96,7 +96,7 @@ const LocalAPI = () => {
 
   const deleteItem = item => {
     console.log(item);
-    Axios.delete(`http://10.0.2.2:3004/users/${item.id}`).then(result => {
+    Axios.delete(`http://10.0.2.2:3000/users/${item.id}`).then(result => {
       console.log('result : ', result);
       getData();
     });
