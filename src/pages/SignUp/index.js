@@ -1,8 +1,12 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {Button, Gap, Header, Select, TextInput} from '../../components';
+import {Button, Gap, Header, TextInput} from '../../components';
+import {useSelector} from 'react-redux';
 
 const SignUp = ({navigation}) => {
+  const globalState = useSelector(state => state.globalReducer);
+  console.log('global state:', globalState);
+
   return (
     <View style={styles.page}>
       <Header
@@ -13,6 +17,7 @@ const SignUp = ({navigation}) => {
       />
       {/* <ScrollView> fitur scroll*/}
       <View style={styles.container}>
+        <Text>{`status error: ${globalState.isError}`}</Text>
         <TextInput label={'Nama'} placeholder={'Masukan nama kamu'} />
         <Gap height={16} />
         <TextInput
