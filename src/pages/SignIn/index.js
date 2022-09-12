@@ -1,29 +1,21 @@
-import Axios from 'axios';
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {Button, Gap, Header, TextInput} from '../../components';
+import {signInAction} from '../../redux/action/auth';
 import {useForm} from '../../utils';
 
 const SignIn = ({navigation}) => {
-  //use state local
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
-  //custome hook useState
   const [form, setForm] = useForm({
     email: '',
     password: '',
   });
 
+  const dispatch = useDispatch();
+
   //dns ip dari android 10.0.2.2 dan port localhost 8000
   const onSubmit = () => {
-    Axios.post('http://10.0.2.2:8000/api/login', form)
-      .then(result => {
-        console.log('success', result);
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+    dispatch(signInAction(form, navigation));
   };
 
   return (

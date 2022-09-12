@@ -1,14 +1,24 @@
 import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {Logo} from '../../asset';
+import {getData} from '../../utils';
 
 const SplashScreen = ({navigation}) => {
   //prop navigation merupakan bawaan dari react navigation yang langsung inject ke halaman yg di tuju
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('SignIn');
+      getData('token').then(result => {
+        // console.log('token:', result);
+        if (result) {
+          navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+        } else {
+          navigation.replace('SignIn');
+        }
+      });
     }, 2000); //berpindah setelah 2 detik
   }, []); //arry kosong agar tidak terus rerender
+
+  useEffect(() => {}, []);
   return (
     <View
       style={{

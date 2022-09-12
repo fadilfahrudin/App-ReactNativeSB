@@ -10,6 +10,7 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {useNavigation} from '@react-navigation/native';
 import ItemsListMenu from '../ItemsListMenu';
 import {Gap} from '../../atoms';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const renderTabBar = props => (
   <TabBar
@@ -35,13 +36,17 @@ const renderTabBar = props => (
 );
 const Akun = () => {
   const navigation = useNavigation();
-
+  const signOut = () => {
+    AsyncStorage.multiRemove(['userProfile', 'token']).then(() => {
+      navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
+    });
+  };
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       <Gap height={10} />
       <ItemsListMenu nama="Edit Profile" />
       <ItemsListMenu nama="Ubah Password" />
-      <ItemsListMenu nama="keluar" />
+      <ItemsListMenu nama="keluar" onPres={signOut} />
     </ScrollView>
   );
 };

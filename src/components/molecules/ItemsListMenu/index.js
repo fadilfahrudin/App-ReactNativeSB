@@ -3,9 +3,9 @@ import React from 'react';
 import {IcForward} from '../../../asset';
 import {color} from 'react-native-reanimated';
 
-const ItemsListMenu = ({nama = 'nama'}) => {
+const ItemsListMenu = ({nama = 'nama', onPres}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPres}>
       <View style={styles.container}>
         <Text style={styles.nama}>{nama}</Text>
         <IcForward />
