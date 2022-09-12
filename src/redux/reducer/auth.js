@@ -1,4 +1,10 @@
-const initStateRegister = {};
+const initStateRegister = {
+  name: '',
+  no_wa: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+};
 
 export const registerReducer = (state = initStateRegister, action) => {
   if (action.type === 'SET_REGISTER') {
