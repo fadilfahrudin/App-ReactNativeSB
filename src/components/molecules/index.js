@@ -9,6 +9,7 @@ import InfoTab from './Infotab';
 import StatusTransaksi from './StatusTransaksi';
 import ProfileTabSection from './ProfileTabSection';
 import ItemsListMenu from './ItemsListMenu';
+import Loading from './Loading';
 
 export {
   Header,
@@ -22,4 +23,5 @@ export {
   StatusTransaksi,
   ProfileTabSection,
   ItemsListMenu,
+  Loading,
 };
