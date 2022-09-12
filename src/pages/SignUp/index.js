@@ -1,10 +1,10 @@
-import Axios from 'axios';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Button, Gap, Header, TextInput} from '../../components';
 import {useForm} from '../../utils';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+
+import {setLoading, signUpAction} from '../../redux/action';
 
 const SignUp = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -16,35 +16,13 @@ const SignUp = ({navigation}) => {
   });
 
   const dispatch = useDispatch();
-  const registerReducer = useSelector(state => state.registerReducer);
+  // const registerReducer = useSelector(state => state.registerReducer);
 
   const onSubmit = () => {
     dispatch({type: 'SET_REGISTER', value: form});
-    // console.log('form :', form);
-    const data = {
-      ...form,
-      ...registerReducer,
-    };
-    // console.log('form final', data);
-
-    Axios.post('http://10.0.2.2:8000/api/register', data)
-      .then(result => {
-        // console.log('data: ', result.data);
-        showToast('Selamat pendaftaran sukses', 'success');
-        navigation.replace('MainApp');
-      })
-      .catch(err => {
-        // console.log('pesan error :', err.response.data.data);
-        showToast(err?.response?.data?.data?.message);
-      });
-  };
-
-  const showToast = (message, type) => {
-    showMessage({
-      message,
-      type: type === 'success' ? 'success' : 'danger',
-      // backgroundColor: type === 'success' ? 'hijau' : 'merah'
-    });
+    console.log('form :', form);
+    dispatch(setLoading(true));
+    dispatch(signUpAction(form, navigation));
   };
 
   return (
