@@ -1,10 +1,7 @@
 import Axios from 'axios';
 import {showMessage, storeData} from '../../utils';
 import {setLoading} from '../../redux/action/global';
-
-const API_HOST = {
-  url: 'http://10.0.2.2:8000/api',
-};
+import {API_HOST} from '../../config';
 
 export const signUpAction = (dataRegister, navigation) => dispatch => {
   Axios.post(`${API_HOST.url}/register`, dataRegister)

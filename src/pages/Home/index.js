@@ -15,8 +15,18 @@ import {
   InfoTab,
   ProgramCard,
 } from '../../components';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProgramData} from '../../redux/action';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {program} = useSelector(state => state.homeReducer);
+
+  useEffect(() => {
+    dispatch(getProgramData());
+  }, []);
+
   return (
     <View style={styles.page}>
       <HomeProfile />
@@ -24,42 +34,19 @@ const Home = ({navigation}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.programCardContainer}>
             <Gap width={16} />
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={() => navigation.navigate('ProgramDetail')}>
-              <ProgramCard
-                image={DummyProgram}
-                judul="Semangat Sedekah Subuh"
-                by="Semangatbantu.com"
-                progress={0.8}
-                nominal="100.000.000"
-                date={25}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={() => navigation.navigate('ProgramDetail')}>
-              <ProgramCard
-                image={DummyProgram}
-                judul="Semangat Sedekah Subuh"
-                by="Semangatbantu.com"
-                progress={0.8}
-                nominal="100.000.000"
-                date={25}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={() => navigation.navigate('ProgramDetail')}>
-              <ProgramCard
-                image={DummyProgram}
-                judul="Semangat Sedekah Subuh"
-                by="Semangatbantu.com"
-                progress={0.8}
-                nominal="100.000.000"
-                date={25}
-              />
-            </TouchableOpacity>
+            {program.map(itemProgram => {
+              return (
+                <ProgramCard
+                  key={itemProgram.id}
+                  image={{uri: itemProgram.banner_program}}
+                  judul={itemProgram.title}
+                  by="Semangatbantu.com"
+                  progress={0.8}
+                  nominal="100.000.000"
+                  date={25}
+                />
+              );
+            })}
           </View>
         </ScrollView>
       </View>

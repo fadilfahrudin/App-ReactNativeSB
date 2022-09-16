@@ -18,7 +18,6 @@ const SplashScreen = ({navigation}) => {
     }, 2000); //berpindah setelah 2 detik
   }, []); //arry kosong agar tidak terus rerender
 
-  useEffect(() => {}, []);
   return (
     <View
       style={{
