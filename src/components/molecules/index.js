@@ -10,6 +10,7 @@ import StatusTransaksi from './StatusTransaksi';
 import ProfileTabSection from './ProfileTabSection';
 import ItemsListMenu from './ItemsListMenu';
 import Loading from './Loading';
+import Number from './Number';
 
 export {
   Header,
@@ -24,4 +25,5 @@ export {
   ProfileTabSection,
   ItemsListMenu,
   Loading,
+  Number,
 };

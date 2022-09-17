@@ -3,13 +3,25 @@ import React from 'react';
 import {IcCeklist} from '../../../asset';
 import * as Progress from 'react-native-progress';
 import {Gap} from '../../atoms';
+import Number from '../Number';
+import Moment from 'moment';
+import {extendMoment} from 'moment-range';
+
+const moment = extendMoment(Moment);
 
 const ProgramCard = ({image, judul, nominal, date, by, progress}) => {
+  const start = new Date();
+  const end = new Date(date);
+  const range = moment.range(start, end);
+  const formatDate = range.diff('days');
+
   return (
     <View style={styles.container}>
       <Image source={image} style={styles.image} />
       <View style={styles.body}>
-        <Text style={styles.judul}>{judul}</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.judul}>
+          {judul}
+        </Text>
         <View style={styles.pemilikProgram}>
           <Text style={styles.lembaga}>{by}</Text>
           <IcCeklist style={styles.ceklist} />
@@ -21,11 +33,11 @@ const ProgramCard = ({image, judul, nominal, date, by, progress}) => {
           color={'rgba(0, 80, 255, 1)'}
         />
         <View style={styles.detail}>
-          <Text style={styles.jml}>Rp,{nominal}</Text>
+          <Number number={nominal} style={styles.jml} />
           <Gap width={2} />
           <Text style={styles.terkumpul}>Terkumpul</Text>
           <Gap width={6} />
-          <Text style={styles.date}>{date} hari lagi</Text>
+          <Text style={styles.date}>{formatDate} hari lagi</Text>
         </View>
       </View>
     </View>
@@ -47,15 +59,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 14,
+    overflow: 'hidden',
   },
   image: {width: 200, height: 140, resizeMode: 'cover'},
   body: {
     marginHorizontal: 10,
     width: 200,
     marginBottom: 10,
-    overflow: 'hidden',
+    paddingRight: 10,
   },
-  judul: {fontSize: 11, fontFamily: 'roboto-bold', color: '#0B2B72'},
+  judul: {
+    fontSize: 11,
+    fontFamily: 'roboto-bold',
+    color: '#0B2B72',
+  },
   pemilikProgram: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -63,7 +80,7 @@ const styles = StyleSheet.create({
   detail: {flexDirection: 'row'},
   lembaga: {color: '#7392D4', fontSize: 9, fontFamily: 'roboto-medium'},
   ceklist: {marginHorizontal: 2},
-  jml: {fontFamily: 'roboto-bold', fontSize: 10, color: '#0B2B72'},
   terkumpul: {fontFamily: 'roboto-medium', fontSize: 9, color: '#0B2B72'},
   date: {fontFamily: 'roboto-medium', fontSize: 10, color: '#0B2B72'},
+  jml: {fontFamily: 'roboto-bold', fontSize: 10, color: '#0B2B72'},
 });

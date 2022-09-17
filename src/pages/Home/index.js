@@ -18,6 +18,7 @@ import {
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getProgramData} from '../../redux/action';
+import {NumericFormat} from 'react-number-format';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
@@ -42,8 +43,8 @@ const Home = ({navigation}) => {
                   judul={itemProgram.title}
                   by="Semangatbantu.com"
                   progress={0.8}
-                  nominal="100.000.000"
-                  date={25}
+                  nominal={itemProgram.target_amount}
+                  date={itemProgram.end_program}
                 />
               );
             })}
