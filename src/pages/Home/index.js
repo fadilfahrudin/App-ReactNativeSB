@@ -42,8 +42,9 @@ const Home = ({navigation}) => {
                   image={{uri: itemProgram.banner_program}}
                   judul={itemProgram.title}
                   by="Semangatbantu.com"
-                  progress={0.8}
-                  nominal={itemProgram.target_amount}
+                  value={itemProgram.collage_amount}
+                  max={itemProgram.target_amount}
+                  nominal={itemProgram.collage_amount}
                   date={itemProgram.end_program}
                 />
               );

@@ -6,10 +6,11 @@ import {Gap} from '../../atoms';
 import Number from '../Number';
 import Moment from 'moment';
 import {extendMoment} from 'moment-range';
+import ProgressBarr from '../ProgressBar';
 
 const moment = extendMoment(Moment);
 
-const ProgramCard = ({image, judul, nominal, date, by, progress}) => {
+const ProgramCard = ({image, judul, nominal, date, by, value, max}) => {
   const start = new Date();
   const end = new Date(date);
   const range = moment.range(start, end);
@@ -26,17 +27,12 @@ const ProgramCard = ({image, judul, nominal, date, by, progress}) => {
           <Text style={styles.lembaga}>{by}</Text>
           <IcCeklist style={styles.ceklist} />
         </View>
-        <Progress.Bar
-          progress={progress}
-          width={175}
-          height={3}
-          color={'rgba(0, 80, 255, 1)'}
-        />
+        <ProgressBarr value={value} max={max} />
         <View style={styles.detail}>
           <Number number={nominal} style={styles.jml} />
           <Gap width={2} />
           <Text style={styles.terkumpul}>Terkumpul</Text>
-          <Gap width={6} />
+          <Gap width={10} />
           <Text style={styles.date}>{formatDate} hari lagi</Text>
         </View>
       </View>
@@ -63,10 +59,10 @@ const styles = StyleSheet.create({
   },
   image: {width: 200, height: 140, resizeMode: 'cover'},
   body: {
-    marginHorizontal: 10,
     width: 200,
     marginBottom: 10,
-    paddingRight: 10,
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
   judul: {
     fontSize: 11,

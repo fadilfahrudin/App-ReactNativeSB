@@ -11,6 +11,7 @@ import ProfileTabSection from './ProfileTabSection';
 import ItemsListMenu from './ItemsListMenu';
 import Loading from './Loading';
 import Number from './Number';
+import ProgressBarr from './ProgressBar';
 
 export {
   Header,
@@ -26,4 +27,5 @@ export {
   ItemsListMenu,
   Loading,
   Number,
+  ProgressBarr,
 };
