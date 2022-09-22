@@ -1,31 +1,21 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import React from 'react';
-import {DummyProgram} from '../../asset';
+import React, {useEffect} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Gap,
   HomeProfile,
   HomeTabSection,
   InfoCard,
-  InfoTab,
   ProgramCard,
 } from '../../components';
-import {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {getProgramData} from '../../redux/action';
-import {NumericFormat} from 'react-number-format';
+import {getProgramByTyeps} from '../../redux/action';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
-  const {program} = useSelector(state => state.homeReducer);
+  const {program_pilihan} = useSelector(state => state.homeReducer);
 
   useEffect(() => {
-    dispatch(getProgramData());
+    dispatch(getProgramByTyeps('program_pilihan'));
   }, []);
 
   return (
@@ -35,7 +25,7 @@ const Home = ({navigation}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.programCardContainer}>
             <Gap width={16} />
-            {program.map(itemProgram => {
+            {program_pilihan.map(itemProgram => {
               return (
                 <ProgramCard
                   key={itemProgram.id}

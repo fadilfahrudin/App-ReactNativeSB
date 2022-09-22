@@ -1,15 +1,10 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-  ScrollView,
-} from 'react-native';
-import React from 'react';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {DummyProgram} from '../../../asset';
-import TabProgram from '../TabProgram';
 import {useNavigation} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {ScrollView, StyleSheet, Text, useWindowDimensions} from 'react-native';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProgramByTyeps} from '../../../redux/action';
+import TabProgram from '../TabProgram';
 
 const renderTabBar = props => (
   <TabBar
@@ -33,60 +28,63 @@ const renderTabBar = props => (
     )}
   />
 );
-const programPilihan = () => {
+const banyakDiminati = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {banyak_diminati} = useSelector(state => state.homeReducer);
+  useEffect(() => {
+    dispatch(getProgramByTyeps('banyak_diminati'));
+  }, []);
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
-      <TabProgram
-        onPress={() => navigation.navigate('ProgramDetail')}
-        judul="Bersama Semangat Bantu Selamatkan Al-Quds #savePalestina"
-        image={DummyProgram}
-        progress={0.3}
-        nominal="1.000.000"
-      />
-      <TabProgram
-        onPress={() => navigation.navigate('ProgramDetail')}
-        judul="Semangat Sedekah Subuh"
-        image={DummyProgram}
-        progress={0.1}
-        nominal="10.000.000"
-      />
-      <TabProgram
-        onPress={() => navigation.navigate('ProgramDetail')}
-        judul="Bantu Berikan Senyum Yatim"
-        image={DummyProgram}
-        progress={1}
-        nominal="50.000.000"
-      />
+      {banyak_diminati.map(item => {
+        return (
+          <TabProgram
+            onPress={() => navigation.navigate('ProgramDetail')}
+            key={item.id}
+            judul={item.title}
+            image={{uri: item.banner_program}}
+            max={item.target_amount}
+            value={item.collage_amount}
+            nominal={item.collage_amount}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
-const donasiRutin = () => {
+const programBaru = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {program_baru} = useSelector(state => state.homeReducer);
+  useEffect(() => {
+    dispatch(getProgramByTyeps('program_baru'));
+  }, []);
+
   return (
+    ///masih belum tampil
     <ScrollView style={{backgroundColor: 'white'}}>
-      <TabProgram
-        onPress={() => navigation.navigate('ProgramDetail')}
-        judul="Semangat Sedekah Subuh"
-        image={DummyProgram}
-        progress={0.1}
-        nominal="10.000.000"
-      />
-      <TabProgram
-        onPress={() => navigation.navigate('ProgramDetail')}
-        judul="Bantu Berikan Senyum Yatim"
-        image={DummyProgram}
-        progress={1}
-        nominal="50.000.000"
-      />
+      {program_baru.map(item => {
+        return (
+          <TabProgram
+            onPress={() => navigation.navigate('ProgramDetail')}
+            key={item.id}
+            judul={item.title}
+            image={{uri: item.banner_program}}
+            max={item.target_amount}
+            value={item.collage_amount}
+            nominal={item.collage_amount}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
 
 const renderScene = SceneMap({
-  1: programPilihan,
-  2: donasiRutin,
+  1: banyakDiminati,
+  2: programBaru,
 });
 
 const HomeTabSection = () => {
@@ -94,8 +92,8 @@ const HomeTabSection = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: '1', title: 'Program Pilihan'},
-    {key: '2', title: 'Donasi Rutin'},
+    {key: '1', title: 'Banyak Diminati'},
+    {key: '2', title: 'Program Baru'},
   ]);
 
   return (
