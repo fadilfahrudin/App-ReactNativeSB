@@ -1,22 +1,18 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import * as Progress from 'react-native-progress';
 import React from 'react';
+import ProgressBarr from '../ProgressBar';
+import Number from '../Number';
 
-const TabProgram = ({judul, image, progress, nominal, onPress}) => {
+const TabProgram = ({judul, image, max, value, nominal, onPress}) => {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
       <View style={styles.container}>
         <Image source={image} style={styles.image} />
         <View style={styles.containerBody}>
           <Text style={styles.judul}>{judul}</Text>
-          <Progress.Bar
-            progress={progress}
-            width={250}
-            height={3}
-            color={'rgba(0, 80, 255, 1)'}
-          />
+          <ProgressBarr value={value} max={max} />
           <Text style={styles.terkumpul}>Terkumpul</Text>
-          <Text style={styles.nominal}>Rp.{nominal}</Text>
+          <Number number={nominal} style={styles.nominal} />
         </View>
       </View>
     </TouchableOpacity>
@@ -32,8 +28,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     overflow: 'hidden',
+    width: '100%',
+    // backgroundColor: 'red',
   },
-  containerBody: {},
+  containerBody: {
+    width: 250,
+    paddingRight: 10,
+    // backgroundColor: 'yellow',
+    overflow: 'visible',
+  },
   image: {width: 90, height: 90, resizeMode: 'cover', marginRight: 13},
   judul: {
     fontFamily: 'Roboto',
