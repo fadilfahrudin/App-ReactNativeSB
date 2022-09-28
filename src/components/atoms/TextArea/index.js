@@ -1,11 +1,15 @@
 import {StyleSheet, Text, View, TextInput as TextInputRN} from 'react-native';
 import React from 'react';
 
-const TextArea = ({lable, placeholder}) => {
+const TextArea = ({lable, placeholder, ...restProp}) => {
   return (
     <View>
       <Text style={styles.label}>{lable}</Text>
-      <TextInputRN style={styles.input} placeholder={placeholder} />
+      <TextInputRN
+        style={styles.input}
+        placeholder={placeholder}
+        {...restProp}
+      />
     </View>
   );
 };

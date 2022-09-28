@@ -1,27 +1,72 @@
+import Moment from 'moment';
+import {extendMoment} from 'moment-range';
+import React, {useEffect, useState} from 'react';
 import {
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
-import React from 'react';
-import {DummyProgram, IcBackWhite, IcCeklist} from '../../asset';
-import {Button, Gap} from '../../components';
-import * as Progress from 'react-native-progress';
+import RenderHTML from 'react-native-render-html';
+import {IcBackWhite, IcCeklist} from '../../asset';
+import {Button, Gap, Number, ProgressBarr} from '../../components';
+import {getData} from '../../utils';
 
-const ProgramDetail = ({navigation}) => {
+const moment = extendMoment(Moment);
+
+const ProgramDetail = ({navigation, route}) => {
+  const {width} = useWindowDimensions();
+  const {
+    title,
+    banner_program,
+    program_by,
+    end_program,
+    collage_amount,
+    target_amount,
+    description,
+  } = route.params;
+  const start = new Date();
+  const end = new Date(end_program);
+  const range = moment.range(start, end);
+  const formatDate = range.diff('days');
+
+  const [userProfile, setUserProfile] = useState({});
+  useEffect(() => {
+    getData('userProfile').then(result => {
+      // console.log('user :', result);
+      setUserProfile(result);
+    });
+  }, []);
+
+  const source = {
+    html: `${description}`,
+  };
+  // console.log('deskripsi :', description);
+
+  const onOrder = () => {
+    const data = {
+      item: {
+        title: title,
+        banner_program: banner_program,
+      },
+      userProfile,
+    };
+    // console.log('on order data: ', data);
+    navigation.navigate('Checkout', data);
+  };
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView stickyHeaderIndices={[1]}>
         <View>
-          <ImageBackground source={DummyProgram} style={styles.cover}>
+          <ImageBackground source={{uri: banner_program}} style={styles.cover}>
             <TouchableOpacity
               style={styles.icBack}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => navigation.goBack()}>
               <IcBackWhite />
               <Text style={{color: 'white', marginLeft: 5}}>Kembali</Text>
             </TouchableOpacity>
@@ -30,7 +75,7 @@ const ProgramDetail = ({navigation}) => {
 
         <View style={styles.headlineContainer}>
           <View>
-            <Text style={styles.judul}>Bersama Semangat Bantu Palestina</Text>
+            <Text style={styles.judul}>{title}</Text>
             <Gap height={14} />
             <View
               style={{
@@ -41,65 +86,33 @@ const ProgramDetail = ({navigation}) => {
               <View>
                 <Text style={styles.lable}>Pemilik Program</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={styles.by}>Semangatbantu.com</Text>
+                  <Text style={styles.by}>{program_by}</Text>
                   <IcCeklist style={{marginLeft: 2}} />
                 </View>
               </View>
-              <Text>28 hari lagi</Text>
+              <Text>{formatDate} hari lagi</Text>
             </View>
             <Gap height={5} />
-            <Progress.Bar
-              progress={0.7}
-              width={352}
-              height={3}
-              color={'rgba(0, 80, 255, 1)'}
-            />
+            <ProgressBarr max={target_amount} value={collage_amount} />
 
             <View style={styles.containerInfoNominal}>
               <Text style={styles.lableNominal}>Terkumpul</Text>
-              <Text style={styles.nominal}>Rp,90.000.000</Text>
-              <Text style={styles.infoNominal}>dari Rp,100.000.000</Text>
+              <Number number={collage_amount} style={styles.nominal} />
+              <Text style={styles.infoNominal}>Dari</Text>
+              <Number number={target_amount} style={styles.infoNominal} />
             </View>
           </View>
         </View>
 
         <View style={styles.bodyContainer}>
+          <Text style={{fontWeight: 'bold'}}>Deskripsi</Text>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              fontFamily: 'Roboto',
-              fontSize: 10,
+              // backgroundColor: 'yellow',
+              width: '100%',
+              overflow: 'hidden',
             }}>
-            <Text style={{fontWeight: 'bold'}}>Deskripsi</Text>
-            <Text>10 Juni 2022</Text>
-          </View>
-          <View>
-            <Text>
-              Assalamu’alaikum Warahmatullahi Wabarakatuh.. Al-Qur’an adalah
-              lentera bagi sebuah peradaban. Terang gelapnya sebuah negeri di
-              hadapan Allah tergantung ada atau tidaknya Ahlul Qur’an di
-              dalamnya. Ahlul Qur’an adalah mereka yang menjadikan Al-Qur’an ada
-              di hati, pikiran, lisan dan perbuatan. Oleh karen itu, harus ada
-              sinergi yang kuat di tengah-tengah umat untuk menjaga sinar-sinar
-              kebaikan itu tetap memancar dan menjadikan Indonesia sebagai
-              negeri yang diberkahi oleh Allah Subhanahu Wa Ta’ala.
-            </Text>
-            <View style={{alignItems: 'center', marginVertical: 10}}>
-              <Image
-                source={DummyProgram}
-                style={{
-                  width: 230,
-                  resizeMode: 'cover',
-                }}
-              />
-            </View>
-            <Text>
-              Maskanul Huffadz adalah sebuah yayasan sosial yang berkomitmen
-              untuk menjadi wadah bagi generasi muda Islam Indonesia agar kelak
-              mereka menjadi penjaga kalam-Nya yang akan menyebar ke seluruh
-              pelosok Indonesia bahkan dunia untuk menyebarkan risalah ini.
-            </Text>
+            <RenderHTML source={source} contentWidth={width} />
           </View>
         </View>
       </ScrollView>
@@ -118,7 +131,7 @@ const ProgramDetail = ({navigation}) => {
           width={200}
           elevation={5}
           height={50}
-          onPress={() => navigation.navigate('Checkout')}
+          onPress={onOrder}
         />
       </View>
     </SafeAreaView>
@@ -152,8 +165,9 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     backgroundColor: 'white',
-    paddingBottom: 50,
+    paddingBottom: 100,
     paddingHorizontal: 30,
+    // alignItems: 'center',
   },
   judul: {fontFamily: 'Roboto-Bold', fontSize: 18},
   containerInfoNominal: {
@@ -175,4 +189,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
   },
+  p: {marginBottom: -50},
 });

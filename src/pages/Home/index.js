@@ -36,6 +36,9 @@ const Home = ({navigation}) => {
                   max={itemProgram.target_amount}
                   nominal={itemProgram.collage_amount}
                   date={itemProgram.end_program}
+                  onPres={() =>
+                    navigation.navigate('ProgramDetail', itemProgram)
+                  }
                 />
               );
             })}

@@ -38,16 +38,16 @@ const banyakDiminati = () => {
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
-      {banyak_diminati.map(item => {
+      {banyak_diminati.map(itemProgram => {
         return (
           <TabProgram
-            onPress={() => navigation.navigate('ProgramDetail')}
-            key={item.id}
-            judul={item.title}
-            image={{uri: item.banner_program}}
-            max={item.target_amount}
-            value={item.collage_amount}
-            nominal={item.collage_amount}
+            onPress={() => navigation.navigate('ProgramDetail', itemProgram)}
+            key={itemProgram.id}
+            judul={itemProgram.title}
+            image={{uri: itemProgram.banner_program}}
+            max={itemProgram.target_amount}
+            value={itemProgram.collage_amount}
+            nominal={itemProgram.collage_amount}
           />
         );
       })}
@@ -65,16 +65,16 @@ const programBaru = () => {
   return (
     ///masih belum tampil
     <ScrollView style={{backgroundColor: 'white'}}>
-      {program_baru.map(item => {
+      {program_baru.map(itemProgram => {
         return (
           <TabProgram
-            onPress={() => navigation.navigate('ProgramDetail')}
-            key={item.id}
-            judul={item.title}
-            image={{uri: item.banner_program}}
-            max={item.target_amount}
-            value={item.collage_amount}
-            nominal={item.collage_amount}
+            onPress={() => navigation.navigate('ProgramDetail', itemProgram)}
+            key={itemProgram.id}
+            judul={itemProgram.title}
+            image={{uri: itemProgram.banner_program}}
+            max={itemProgram.target_amount}
+            value={itemProgram.collage_amount}
+            nominal={itemProgram.collage_amount}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {IcCeklist} from '../../../asset';
 import * as Progress from 'react-native-progress';
@@ -10,33 +10,35 @@ import ProgressBarr from '../ProgressBar';
 
 const moment = extendMoment(Moment);
 
-const ProgramCard = ({image, judul, nominal, date, by, value, max}) => {
+const ProgramCard = ({image, judul, nominal, date, by, value, max, onPres}) => {
   const start = new Date();
   const end = new Date(date);
   const range = moment.range(start, end);
   const formatDate = range.diff('days');
 
   return (
-    <View style={styles.container}>
-      <Image source={image} style={styles.image} />
-      <View style={styles.body}>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.judul}>
-          {judul}
-        </Text>
-        <View style={styles.pemilikProgram}>
-          <Text style={styles.lembaga}>{by}</Text>
-          <IcCeklist style={styles.ceklist} />
-        </View>
-        <ProgressBarr value={value} max={max} />
-        <View style={styles.detail}>
-          <Number number={nominal} style={styles.jml} />
-          <Gap width={2} />
-          <Text style={styles.terkumpul}>Terkumpul</Text>
-          <Gap width={10} />
-          <Text style={styles.date}>{formatDate} hari lagi</Text>
+    <TouchableOpacity activeOpacity={0.8} onPress={onPres}>
+      <View style={styles.container}>
+        <Image source={image} style={styles.image} />
+        <View style={styles.body}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.judul}>
+            {judul}
+          </Text>
+          <View style={styles.pemilikProgram}>
+            <Text style={styles.lembaga}>{by}</Text>
+            <IcCeklist style={styles.ceklist} />
+          </View>
+          <ProgressBarr value={value} max={max} />
+          <View style={styles.detail}>
+            <Number number={nominal} style={styles.jml} />
+            <Gap width={2} />
+            <Text style={styles.terkumpul}>Terkumpul</Text>
+            <Gap width={10} />
+            <Text style={styles.date}>{formatDate} hari lagi</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
