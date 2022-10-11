@@ -19,5 +19,11 @@ export default TextInput;
 
 const styles = StyleSheet.create({
   label: {fontSize: 16, fontFamily: 'Poppins-Reguler', color: '#020202'},
-  input: {borderWidth: 1, borderColor: '#020202', borderRadius: 8, padding: 10},
+  input: {
+    borderWidth: 1,
+    borderColor: '#020202',
+    borderRadius: 8,
+    padding: 10,
+    color: '#020202',
+  },
 });
