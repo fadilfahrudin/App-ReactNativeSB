@@ -1,40 +1,45 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Gap} from '../../atoms';
+import Number from '../Number';
+import moment from 'moment';
 
-const StatusTransaksi = ({image, judul, waktu, status, nominal}) => {
+const StatusTransaksi = ({image, judul, waktu, status, nominal, onPress}) => {
   const renderContent = () => {
     switch (status) {
-      case 'sukses':
+      case 'success':
         return <Text style={styles.statusPembayaran('green')}>Sukses</Text>;
-      case 'tertunda':
+      case 'pending':
         return <Text style={styles.statusPembayaran('#FFC700')}>Tertunda</Text>;
-      case 'gagal':
+      case 'expired':
         return <Text style={styles.statusPembayaran('red')}>Gagal</Text>;
     }
   };
 
+  const formatedDate = moment(waktu).format('ddd, DD MMM YYYY');
   return (
-    <View style={styles.mainContent}>
-      <View style={styles.content}>
-        <View style={styles.subContent}>
-          <Image source={image} style={styles.img} />
-          <View>
-            <Text style={{fontFamily: 'Roboto-Bold', fontSize: 14}}>
-              {judul}
-            </Text>
-            <View style={styles.info}>
-              <Text>{waktu} lalu</Text>
-              <Gap width={5} />
-              <Text style={{fontWeight: 'bold', fontSize: 20}}>|</Text>
-              <Gap width={5} />
-              <Text style={{fontFamily: 'Roboto-Bold'}}>{nominal}</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.mainContent}>
+        <View style={styles.content}>
+          <View style={styles.subContent}>
+            <Image source={image} style={styles.img} />
+            <View>
+              <Text style={{fontFamily: 'Roboto-Bold', fontSize: 14}}>
+                {judul}
+              </Text>
+              <View style={styles.info}>
+                <Text>{formatedDate}</Text>
+                <Gap width={5} />
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>|</Text>
+                <Gap width={5} />
+                <Number number={nominal} style={{fontFamily: 'Roboto-Bold'}} />
+              </View>
             </View>
           </View>
+          {renderContent()}
         </View>
-        {renderContent()}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
