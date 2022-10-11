@@ -80,6 +80,12 @@ const Router = () => {
         component={LocalAPI}
         options={{headerShown: false}}
       />
+
+      <Stack.Screen
+        name="Donasi Saya"
+        component={DonasiSaya}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
