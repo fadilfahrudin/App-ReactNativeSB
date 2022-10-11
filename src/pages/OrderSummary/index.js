@@ -1,24 +1,26 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-} from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import React, {useState} from 'react';
-import {Button, Gap, Header, TabProgram, TextInput} from '../../components';
-import {BankBsi, DummyProgram, IcCeklist, IcChat, IcForward} from '../../asset';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
+import {BankBsi, DummyProgram, IcCeklist, IcChat, IcForward} from '../../asset';
+import {Button, Gap, Header, Number} from '../../components';
 
-const OrderSummary = ({navigation}) => {
+const OrderSummary = ({navigation, route}) => {
+  const {amount_final, bank_transfer, title, program_by, banner_program} =
+    route.params;
   const copyNorek = () => {
-    Clipboard.setString('7111085310');
+    Clipboard.setString(bank_transfer);
   }; //copy norek
 
   const copyNominalDonasi = () => {
-    Clipboard.setString('10000');
+    Clipboard.setString(amount_final);
   }; //copy nominal donasi
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -33,7 +35,7 @@ const OrderSummary = ({navigation}) => {
         title="Intruksi Donasi"
         subTitle="Program Semangat Sedekah Subuh"
         onBack
-        onPress={() => navigation.navigate('Donasi Saya')}
+        onPress={() => navigation.goBack()}
       />
 
       <View style={styles.page}>
@@ -58,7 +60,7 @@ const OrderSummary = ({navigation}) => {
               <View>
                 <Text style={styles.subTitleTransaksi}>An. Semangat Bantu</Text>
                 <Gap height={5} />
-                <Text style={styles.titleTransaksi}>711 1085 317</Text>
+                <Text style={styles.titleTransaksi}>{bank_transfer}</Text>
               </View>
               <Button
                 text={'SALIN'}
@@ -72,13 +74,13 @@ const OrderSummary = ({navigation}) => {
               <View>
                 <Text style={styles.subTitleTransaksi}>Jumlah Donasi</Text>
                 <Gap height={5} />
-                <Text style={styles.titleTransaksi}>Rp10.000.000</Text>
+                <Number style={styles.titleTransaksi} number={amount_final} />
               </View>
               <Button
                 text={'SALIN'}
                 width={90}
                 height={40}
-                onPress={copyNorek}
+                onPress={copyNominalDonasi}
               />
             </View>
           </View>
@@ -103,7 +105,7 @@ const OrderSummary = ({navigation}) => {
           <View style={styles.infoProgram}>
             <TouchableOpacity
               onPress={() => navigation.navigate('ProgramDetail')}>
-              <Image source={DummyProgram} style={styles.img} />
+              <Image source={{uri: banner_program}} style={styles.img} />
             </TouchableOpacity>
             <View
               style={{
@@ -112,16 +114,12 @@ const OrderSummary = ({navigation}) => {
               }}>
               <TouchableOpacity
                 onPress={() => navigation.navigate('ProgramDetail')}>
-                <Text style={styles.infoProgramTitle}>
-                  Bersama Semangat Bantu Selamatkan Al-Quds #SavePalestine
-                </Text>
+                <Text style={styles.infoProgramTitle}>{title}</Text>
               </TouchableOpacity>
               <Gap height={5} />
               <Text>Pemilik Program</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{fontFamily: 'Roboto-Medium'}}>
-                  Semangatbantu.com
-                </Text>
+                <Text style={{fontFamily: 'Roboto-Medium'}}>{program_by}</Text>
                 <IcCeklist />
               </View>
             </View>
