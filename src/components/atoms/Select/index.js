@@ -3,9 +3,7 @@ import {Picker} from '@react-native-picker/picker';
 import React from 'react';
 import {useState} from 'react';
 
-const Bank = ({title}) => <Text>{title}</Text>;
-
-const Select = ({label}) => {
+const Select = ({label, value, onSelectChange}) => {
   const [selectedLanguage, setSelectedLanguage] = useState();
 
   return (
@@ -13,12 +11,12 @@ const Select = ({label}) => {
       <Text style={styles.label}>{label}</Text>
       <View style={styles.input}>
         <Picker
-          selectedValue={selectedLanguage}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedLanguage(itemValue)
-          }>
-          <Picker.Item label="Bank Syariah Indonesia" value="bsi" />
-          <Picker.Item label="Bank Mandiri" value="mandiri" />
+          selectedValue={value}
+          onValueChange={itemValue => onSelectChange(itemValue)}>
+          <Picker.Item label="--Pilih--" />
+          <Picker.Item label="Midtrans" value="midtrans" />
+          <Picker.Item label="Bank Syariah Indonesia" value="7128976" />
+          <Picker.Item label="Bank Mandiri" value="114001235678" />
         </Picker>
       </View>
     </View>
