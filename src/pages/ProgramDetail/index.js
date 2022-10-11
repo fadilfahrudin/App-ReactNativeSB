@@ -21,6 +21,7 @@ const moment = extendMoment(Moment);
 const ProgramDetail = ({navigation, route}) => {
   const {width} = useWindowDimensions();
   const {
+    id,
     title,
     banner_program,
     program_by,
@@ -50,8 +51,10 @@ const ProgramDetail = ({navigation, route}) => {
   const onOrder = () => {
     const data = {
       item: {
+        id: id,
         title: title,
         banner_program: banner_program,
+        program_by: program_by,
       },
       userProfile,
     };
