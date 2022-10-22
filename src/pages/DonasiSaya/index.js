@@ -6,17 +6,11 @@ import {getOrderHistory, getOrders} from '../../redux/action';
 
 const DonasiSaya = ({navigation}) => {
   const dispatch = useDispatch();
-
   const {order} = useSelector(state => state.orderReducer);
-  // const {orderHistory} = useSelector(state => state.orderReducer);
 
   useEffect(() => {
     dispatch(getOrders());
   }, []);
-
-  // useEffect(() => {
-  //   dispatch(getOrderHistory());
-  // }, []);
 
   console.log('order status ', order);
 
@@ -39,7 +33,7 @@ const DonasiSaya = ({navigation}) => {
                 waktu={itemOrder.updated_at}
                 nominal={itemOrder.amount_final}
                 status={itemOrder.status}
-                onPress={() => navigation.navigate('OrderSummary')}
+                onPress={() => navigation.navigate('OrderSummary', itemOrder)}
               />
             );
           })}

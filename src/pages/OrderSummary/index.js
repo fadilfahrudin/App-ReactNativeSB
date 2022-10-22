@@ -1,4 +1,3 @@
-import Clipboard from '@react-native-clipboard/clipboard';
 import React, {useState} from 'react';
 import {
   Image,
@@ -8,32 +7,63 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Modal from 'react-native-modal';
-import {BankBsi, DummyProgram, IcCeklist, IcChat, IcForward} from '../../asset';
-import {Button, Gap, Header, Number} from '../../components';
+import WebView from 'react-native-webview';
+import {IcCeklist, IcChat} from '../../asset';
+import {Button, Gap, Header, Loading, Number} from '../../components';
 
-const OrderSummary = ({navigation, route}) => {
-  const {amount_final, bank_transfer, title, program_by, banner_program} =
-    route.params;
-  const copyNorek = () => {
-    Clipboard.setString(bank_transfer);
-  }; //copy norek
+const OrderSummary = ({route, navigation}) => {
+  const order = route.params;
+  const [showWebView, setShowWebView] = useState(false);
+  // state = {showWebView: false};
+  // const {showWebView} = this.state;
 
-  const copyNominalDonasi = () => {
-    Clipboard.setString(amount_final);
-  }; //copy nominal donasi
+  console.log('order detail :', order);
 
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const renderContent = () => {
+    switch (order.status) {
+      case 'success':
+        return <Text style={styles.statusPembayaran('#1ABC9C')}>SUKSES</Text>;
+      case 'pending':
+        return <Text style={styles.statusPembayaran('#FFC700')}>TERTUNDA</Text>;
+      case 'expired':
+        return <Text style={styles.statusPembayaran('#EC413D')}>BERAKHIR</Text>;
+    }
   };
+
+  const OnNavChange = state => {
+    console.log('nav: ', state);
+    const urlSuccess = '';
+    //Testing Sementara pakai internet tepat karena blm di hosting
+    const urlWeb = 'https://mercusuar.uzone.id/';
+    if (state.url === urlWeb) {
+      navigation.replace('MainApp', {screen: 'Donasi Saya'});
+    }
+  };
+
+  if (showWebView) {
+    return (
+      <>
+        <Header
+          title={'Pembayaran Donasi Program'}
+          subTitle={order.program.title}
+          onBack
+          onPress={() => setShowWebView(false)}
+        />
+        <WebView
+          source={{uri: order.payment_url}}
+          startInLoadingState={true}
+          renderLoading={() => <Loading />}
+          onNavigationStateChange={OnNavChange}
+        />
+      </>
+    );
+  }
 
   return (
     <ScrollView stickyHeaderIndices={[0]}>
       <Header
         title="Intruksi Donasi"
-        subTitle="Program Semangat Sedekah Subuh"
+        subTitle={order.program.title}
         onBack
         onPress={() => navigation.goBack()}
       />
@@ -43,69 +73,39 @@ const OrderSummary = ({navigation, route}) => {
 
         <View>
           <View style={styles.mainContent}>
+            {renderContent()}
             <Text style={styles.title}>Batas waktu pembayaran</Text>
-            <Text style={styles.subTitle}>2 jan 2022 16:19 WIB</Text>
+            <Text style={styles.subTitle}>{order.expired_date}</Text>
           </View>
 
           <View style={styles.mainContent}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.title}>Transfer Bank</Text>
-              <BankBsi />
-            </View>
-
-            <Gap height={6} />
-
-            <View style={styles.itemTransaksi}>
-              <View>
-                <Text style={styles.subTitleTransaksi}>An. Semangat Bantu</Text>
-                <Gap height={5} />
-                <Text style={styles.titleTransaksi}>{bank_transfer}</Text>
-              </View>
-              <Button
-                text={'SALIN'}
-                width={90}
-                height={40}
-                onPress={copyNorek}
-              />
-            </View>
-            <Gap height={10} />
             <View style={styles.itemTransaksi}>
               <View>
                 <Text style={styles.subTitleTransaksi}>Jumlah Donasi</Text>
                 <Gap height={5} />
-                <Number style={styles.titleTransaksi} number={amount_final} />
+                <Number
+                  style={styles.titleTransaksi}
+                  number={order.amount_final}
+                />
               </View>
               <Button
-                text={'SALIN'}
-                width={90}
-                height={40}
-                onPress={copyNominalDonasi}
+                text={'Bayar Sekarang'}
+                width={150}
+                height={45}
+                onPress={() => setShowWebView(true)}
               />
             </View>
           </View>
 
-          <View>
-            <TouchableOpacity style={styles.bantuan} onPress={toggleModal}>
-              <Text style={styles.bantuanTitle}>Bantuan</Text>
-              <IcForward />
-            </TouchableOpacity>
-
-            <Modal
-              isVisible={isModalVisible}
-              onSwipeComplete={() => setModalVisible(false)}
-              swipeDirection="down"
-              onModalHide={() => setModalVisible()}>
-              <View style={{backgroundColor: 'white'}}>
-                <Text> atm mandiri</Text>
-              </View>
-            </Modal>
-          </View>
-
           <View style={styles.infoProgram}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ProgramDetail')}>
-              <Image source={{uri: banner_program}} style={styles.img} />
+              onPress={() =>
+                navigation.navigate('ProgramDetail', order.program)
+              }>
+              <Image
+                source={{uri: order.program.banner_program}}
+                style={styles.img}
+              />
             </TouchableOpacity>
             <View
               style={{
@@ -113,13 +113,19 @@ const OrderSummary = ({navigation, route}) => {
                 width: 270,
               }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ProgramDetail')}>
-                <Text style={styles.infoProgramTitle}>{title}</Text>
+                onPress={() =>
+                  navigation.navigate('ProgramDetail', order.program)
+                }>
+                <Text style={styles.infoProgramTitle}>
+                  {order.program.title}
+                </Text>
               </TouchableOpacity>
               <Gap height={5} />
               <Text>Pemilik Program</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{fontFamily: 'Roboto-Medium'}}>{program_by}</Text>
+                <Text style={{fontFamily: 'Roboto-Medium'}}>
+                  {order.program.program_by}
+                </Text>
                 <IcCeklist />
               </View>
             </View>
@@ -128,7 +134,7 @@ const OrderSummary = ({navigation, route}) => {
           <View>
             <TouchableOpacity
               style={styles.buttonEx}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => navigation.navigate('MainApp', {screen: 'Home'})}>
               <Text style={{textAlign: 'center', color: 'white'}}>
                 Lihat Program Lainnya
               </Text>
@@ -163,27 +169,40 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
   },
-  title: {fontFamily: 'Roboto-Bold', fontSize: 16, fontWeight: '600'},
-  subTitle: {fontSize: 14, fontWeight: '400'},
+  title: {
+    fontFamily: 'Poppins',
+    fontSize: 14,
+    color: '#8D92A3',
+    textAlign: 'center',
+  },
+  subTitle: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 14,
+    color: '#020202',
+
+    textAlign: 'center',
+  },
+  statusPembayaran: statusColor => ({
+    color: statusColor,
+    textAlign: 'center',
+    marginBottom: 4,
+  }),
   itemTransaksi: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
   titleTransaksi: {
-    backgroundColor: '#D9D9D999',
-    paddingRight: 100,
-    paddingLeft: 10,
-    paddingVertical: 10,
-    fontFamily: 'Roboto-Bold',
-    fontSize: 16,
-    fontWeight: '600',
-    borderRadius: 5,
+    fontFamily: 'Poppins-Medium',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#020202',
   },
   subTitleTransaksi: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 11,
+    fontFamily: 'Poppins',
+    fontSize: 12,
     fontWeight: '400',
+    color: '#020202',
   },
   bantuan: {
     backgroundColor: 'white',

@@ -1,7 +1,8 @@
 import Axios from 'axios';
-import {showMessage, storeData} from '../../utils';
+import {getData, showMessage, storeData} from '../../utils';
 import {setLoading} from '../../redux/action/global';
 import {API_HOST} from '../../config';
+import {useEffect} from 'react';
 
 export const signUpAction = (dataRegister, navigation) => dispatch => {
   Axios.post(`${API_HOST.url}/register`, dataRegister)
@@ -42,4 +43,29 @@ export const signInAction = (form, navigation) => dispatch => {
       dispatch(setLoading(false));
       showMessage(err?.response?.data?.data?.message);
     });
+};
+
+export const uploadPhotoAction = (dataImage, userProfile) => dispatch => {
+  const profile = userProfile;
+
+  getData('token').then(resToken => {
+    const photoForUpload = new FormData();
+    photoForUpload.append('file', dataImage);
+
+    Axios.post(`${API_HOST.url}/user/photo`, photoForUpload, {
+      headers: {
+        Authorization: resToken.value,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then(result => {
+        // console.log('hasil upload', result.data.data[0]);
+        profile.profile_photo_url = `http://10.0.2.2:8000/storage/${result.data.data[0]}`;
+        storeData('userProfile', profile);
+        console.log('user profile', profile);
+      })
+      .catch(err => {
+        showMessage(err?.response?.data?.data?.message);
+      });
+  });
 };
