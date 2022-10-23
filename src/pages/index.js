@@ -11,6 +11,7 @@ import OrderSummary from './OrderSummary';
 import CallApiVanilaJs from './CallApiValinaJs';
 import CallApiAxios from './CallApiAxios';
 import LocalAPI from './LocalAPI';
+import DetailProfile from './DetailProfile';
 
 export {
   SplashScreen,
@@ -26,4 +27,5 @@ export {
   CallApiVanilaJs,
   CallApiAxios,
   LocalAPI,
+  DetailProfile,
 };

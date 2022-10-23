@@ -1,8 +1,6 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IcBack} from '../../../asset/Icon';
-import {LogoHeader} from '../../../asset/Illustration';
-import Svg from 'react-native-svg';
 
 const Header = ({title, subTitle, onBack, onPress}) => {
   return (
@@ -26,14 +24,13 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#0050FF',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 24,
-    paddingTop: 30,
-    paddingBottom: 24,
+    paddingVertical: 15,
   },
-  title: {fontSize: 22, fontFamily: 'Poppins-Medium', color: '#020202'},
-  subTitle: {fontSize: 14, fontFamily: 'Poppins-Light', color: '#8D92A3'},
+  title: {fontSize: 18, fontFamily: 'Poppins-Medium', color: 'white'},
+  subTitle: {fontSize: 14, fontFamily: 'Poppins-Light', color: 'white'},
   back: {padding: 16, marginRight: 16, marginLeft: -10},
 });

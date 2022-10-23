@@ -1,43 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {useDispatch} from 'react-redux';
-import {Gap, ItemsListMenu, ProfileTabSection} from '../../components';
-import {uploadPhotoAction} from '../../redux/action';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {Gap, Header, ItemsListMenu, Loading} from '../../components';
 import {getData} from '../../utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import WebView from 'react-native-webview';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const [userProfile, setUserProfile] = useState({});
-  const [photo, setPhoto] = useState('');
+  const [isWebOpen, setIsWebOpen] = useState(false);
+  const [url, setUrl] = useState('');
 
-  const dispatch = useDispatch();
-
-  const addPhoto = () => {
-    const option = {
-      mediaType: 'photo',
-      quality: 0.5,
-      maxWidth: 200,
-      maxHeight: 200,
-    };
-
-    launchImageLibrary(option, res => {
-      if (res.didCancel) {
-        console.log('user cencel');
-      } else if (res.errorCode) {
-        console.log(res.errorMessage);
-      } else {
-        const data = res.assets[0];
-        console.log('data res :', data);
-
-        const dataImage = {
-          uri: data.uri,
-          type: data.type,
-          name: data.fileName,
-        };
-
-        dispatch(uploadPhotoAction(dataImage, userProfile));
-        setPhoto(data.uri);
-      }
+  const signOut = () => {
+    AsyncStorage.multiRemove(['userProfile', 'token']).then(() => {
+      navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
     });
   };
 
@@ -48,41 +23,79 @@ const Profile = () => {
     });
   }, []);
 
+  const onWeb = alamat => {
+    if (alamat === 'About') {
+      setIsWebOpen(true);
+      setUrl('https://www.semangatbantu.com/tentang-kami');
+    } else if (alamat === 's&k') {
+      setIsWebOpen(true);
+      setUrl('https://www.semangatbantu.com/syarat-ketentuan');
+    } else if (alamat === 'kebijakanPrivasi') {
+      setIsWebOpen(true);
+      setUrl('https://www.semangatbantu.com/kebijakan-privasi');
+    } else if (alamat === 'legalitas') {
+      setIsWebOpen(true);
+      setUrl('https://www.semangatbantu.com/legalitas');
+    } else {
+      setIsWebOpen(true);
+      setUrl('https://www.semangatbantu.com/tim-kami');
+    }
+  };
+
+  if (isWebOpen) {
+    return (
+      <>
+        <Header
+          title={'Tentang'}
+          subTitle={'Semangat Bantu'}
+          onBack
+          onPress={() => setIsWebOpen(false)}
+        />
+        <WebView source={{uri: url}} />
+      </>
+    );
+  }
+
   return (
     <View style={styles.page}>
       <View style={styles.containerPhotoDetail}>
         <View style={styles.bgPhoto}>
-          <TouchableOpacity onPress={addPhoto}>
-            {photo ? (
-              <Image source={{uri: photo}} style={styles.photo} />
-            ) : (
-              <Image
-                source={{uri: userProfile.profile_photo_url}}
-                style={styles.photo}
-              />
-            )}
-          </TouchableOpacity>
+          <Image
+            source={{uri: userProfile.profile_photo_url}}
+            style={styles.photo}
+          />
         </View>
         <Gap height={10} />
         <Text style={styles.nama}>{userProfile.name}</Text>
-        <Text style={styles.username}>{userProfile.email}</Text>
       </View>
 
       <View style={styles.containerMenu}>
         <Text style={styles.titleSection}>Akun Saya</Text>
         <View style={styles.bodySection}>
-          <ItemsListMenu nama="Profile Saya" />
+          <ItemsListMenu
+            nama="Profile Saya"
+            onPres={() => navigation.navigate('Detail Profile')}
+          />
         </View>
         <Text style={styles.titleSection}>Seputar Semangat Bantu</Text>
         <View style={styles.bodySection}>
-          <ItemsListMenu nama="Tentang Semangat Bantu" />
-          <ItemsListMenu nama="Syarat dan Ketentuan" />
-          <ItemsListMenu nama="Kebijakan Privasi" />
-          <ItemsListMenu nama="Legalitas" />
-          <ItemsListMenu nama="Tim Kami" />
+          <ItemsListMenu
+            nama="Tentang Semangat Bantu"
+            onPres={() => onWeb('About')}
+          />
+          <ItemsListMenu
+            nama="Syarat dan Ketentuan"
+            onPres={() => onWeb('s&k')}
+          />
+          <ItemsListMenu
+            nama="Kebijakan Privasi"
+            onPres={() => onWeb('kebijakanPrivasi')}
+          />
+          <ItemsListMenu nama="Legalitas" onPres={() => onWeb('legalitas')} />
+          <ItemsListMenu nama="Tim Kami" onPres={() => onWeb('tim')} />
         </View>
         <Gap height={15} />
-        <ItemsListMenu nama="Keluar" color="red" />
+        <ItemsListMenu nama="Keluar" color="red" onPres={signOut} />
       </View>
 
       {/* <View style={styles.tabContainer}>
@@ -98,19 +111,17 @@ const styles = StyleSheet.create({
   page: {flex: 1},
   tabContainer: {flex: 1},
   containerPhotoDetail: {
-    backgroundColor: 'white',
+    backgroundColor: '#0050FF',
     justifyContent: 'center',
     alignItems: 'center',
     height: 200,
     marginBottom: 6,
   },
   bgPhoto: {
-    borderWidth: 1,
-    borderColor: '#C4C4C4',
+    backgroundColor: 'white',
     width: 110,
     height: 110,
     borderRadius: 110,
-    borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -119,9 +130,13 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 90,
     backgroundColor: '#f0f0f0',
-    padding: 24,
   },
-  nama: {fontFamily: 'Roboto-Bold', fontSize: 18, fontWeight: '800'},
+  nama: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 18,
+    fontWeight: '800',
+    color: 'white',
+  },
   username: {fontFamily: 'Roboto-Reguler', fontSize: 16},
   titleSection: {
     marginLeft: 10,

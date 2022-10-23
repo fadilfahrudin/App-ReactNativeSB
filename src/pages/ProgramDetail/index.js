@@ -125,7 +125,7 @@ const ProgramDetail = ({navigation, route}) => {
     console.log('nav: ', state);
     const urlSuccess = '';
     //Testing Sementara pakai internet tepat karena blm di hosting
-    const urlWeb = 'https://internettepat.telkomsel.com/dns?';
+    const urlWeb = 'https://mercusuar.uzone.id/';
     if (state.url === urlWeb) {
       navigation.replace('MainApp', {screen: 'Donasi Saya'});
     }
