@@ -21,12 +21,12 @@ const DetailProfile = ({navigation}) => {
 
     launchImageLibrary(option, res => {
       if (res.didCancel) {
-        console.log('user cencel');
+        // console.log('user cencel');
       } else if (res.errorCode) {
-        console.log(res.errorMessage);
+        // console.log(res.errorMessage);
       } else {
         const data = res.assets[0];
-        console.log('data res :', data);
+        // console.log('data res :', data);
 
         const dataImage = {
           uri: data.uri,
@@ -42,7 +42,7 @@ const DetailProfile = ({navigation}) => {
 
   useEffect(() => {
     getData('userProfile').then(res => {
-      console.log('response :', res);
+      // console.log('response :', res);
       setUserProfile(res);
     });
   }, []);

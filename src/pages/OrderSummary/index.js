@@ -32,11 +32,12 @@ const OrderSummary = ({route, navigation}) => {
 
   const OnNavChange = state => {
     console.log('nav: ', state);
-    const urlSuccess = '';
-    //Testing Sementara pakai internet tepat karena blm di hosting
-    const urlWeb = 'https://mercusuar.uzone.id/';
-    if (state.url === urlWeb) {
-      navigation.replace('MainApp', {screen: 'Donasi Saya'});
+    const titleWeb = 'Laravel';
+
+    if (state.title === titleWeb) {
+      setTimeout(() => {
+        navigation.replace('MainApp', {screen: 'Donasi Saya'});
+      }, 5000);
     }
   };
 

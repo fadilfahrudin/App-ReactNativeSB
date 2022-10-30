@@ -105,14 +105,14 @@ const ProgramDetail = ({navigation, route}) => {
       bank_transfer: 'midtrans',
     };
 
-    // console.log('data transaksi: ', data);
+    console.log('data transaksi: ', data);
     Axios.post(`${API_HOST.url}/checkout`, data, {
       headers: {
         Authorization: token,
       },
     })
       .then(response => {
-        // console.log('checkout success', response.data.data);
+        console.log('checkout success', response.data.data);
         setIsPaymentOpen(true);
         setPaymentURL(response.data.data.payment_url);
       })
@@ -123,10 +123,9 @@ const ProgramDetail = ({navigation, route}) => {
 
   const OnNavChange = state => {
     console.log('nav: ', state);
-    const urlSuccess = '';
-    //Testing Sementara pakai internet tepat karena blm di hosting
-    const urlWeb = 'https://mercusuar.uzone.id/';
-    if (state.url === urlWeb) {
+    const titleWeb = 'Laravel';
+
+    if (state.title === titleWeb) {
       navigation.replace('MainApp', {screen: 'Donasi Saya'});
     }
   };

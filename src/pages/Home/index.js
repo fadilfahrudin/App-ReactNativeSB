@@ -25,6 +25,7 @@ const Home = ({navigation}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.programCardContainer}>
             <Gap width={16} />
+
             {program_pilihan.map(itemProgram => {
               return (
                 <ProgramCard
@@ -48,7 +49,10 @@ const Home = ({navigation}) => {
       <View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.infoCardContainer}>
-            <InfoCard namaInfo="Program Tersedia" total={6} />
+            <InfoCard
+              namaInfo="Program Tersedia"
+              total={program_pilihan.length}
+            />
             <InfoCard namaInfo="Jumlah Donasi" total="Rp.70.000.000" />
             <InfoCard namaInfo="Penerima Manfaat" total={100} />
           </View>

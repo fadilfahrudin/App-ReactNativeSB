@@ -1,12 +1,15 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {Gap, Header, ItemsListMenu, Loading} from '../../components';
-import {getData} from '../../utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import WebView from 'react-native-webview';
+import {Gap, Header, ItemsListMenu} from '../../components';
+import {getData} from '../../utils';
 
 const Profile = ({navigation}) => {
   const [userProfile, setUserProfile] = useState({});
+  const nav = useNavigation();
+
   const [isWebOpen, setIsWebOpen] = useState(false);
   const [url, setUrl] = useState('');
 
@@ -17,11 +20,13 @@ const Profile = ({navigation}) => {
   };
 
   useEffect(() => {
-    getData('userProfile').then(res => {
-      console.log('response :', res);
-      setUserProfile(res);
+    nav.addListener('focus', () => {
+      getData('userProfile').then(result => {
+        // console.log('user profile :', result);
+        setUserProfile(result);
+      });
     });
-  }, []);
+  }, [nav]);
 
   const onWeb = alamat => {
     if (alamat === 'About') {
@@ -97,10 +102,6 @@ const Profile = ({navigation}) => {
         <Gap height={15} />
         <ItemsListMenu nama="Keluar" color="red" onPres={signOut} />
       </View>
-
-      {/* <View style={styles.tabContainer}>
-        <ProfileTabSection />
-      </View> */}
     </View>
   );
 };
@@ -126,9 +127,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   photo: {
-    width: 90,
-    height: 90,
-    borderRadius: 90,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
     backgroundColor: '#f0f0f0',
   },
   nama: {

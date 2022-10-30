@@ -60,9 +60,9 @@ export const uploadPhotoAction = (dataImage, userProfile) => dispatch => {
     })
       .then(result => {
         // console.log('hasil upload', result.data.data[0]);
-        profile.profile_photo_url = `http://10.0.2.2:8000/storage/${result.data.data[0]}`;
+        profile.profile_photo_url = `http://admin-sbapps.my.id/storage/${result.data.data[0]}`;
         storeData('userProfile', profile);
-        console.log('user profile', profile);
+        // console.log('user profile', profile);
       })
       .catch(err => {
         showMessage(err?.response?.data?.data?.message);

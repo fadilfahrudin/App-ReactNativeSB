@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {IcCeklist} from '../../../asset';
 import * as Progress from 'react-native-progress';
 import {Gap} from '../../atoms';
@@ -16,6 +16,10 @@ const ProgramCard = ({image, judul, nominal, date, by, value, max, onPres}) => {
   const range = moment.range(start, end);
   const formatDate = range.diff('days');
 
+  // const [total, setTotal] = useState('Rp.0');
+
+  // console.log('Result: ', total);
+
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPres}>
       <View style={styles.container}>
@@ -30,7 +34,10 @@ const ProgramCard = ({image, judul, nominal, date, by, value, max, onPres}) => {
           </View>
           <ProgressBarr value={value} max={max} />
           <View style={styles.detail}>
-            <Number number={nominal} style={styles.jml} />
+            <Number
+              number={nominal <= 0 ? 'Rp.0' : nominal}
+              style={styles.jml}
+            />
             <Gap width={2} />
             <Text style={styles.terkumpul}>Terkumpul</Text>
             <Gap width={10} />
