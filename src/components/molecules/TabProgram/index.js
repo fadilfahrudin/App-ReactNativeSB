@@ -12,7 +12,10 @@ const TabProgram = ({judul, image, max, value, nominal, onPress}) => {
           <Text style={styles.judul}>{judul}</Text>
           <ProgressBarr value={value} max={max} />
           <Text style={styles.terkumpul}>Terkumpul</Text>
-          <Number number={nominal} style={styles.nominal} />
+          <Number
+            number={nominal <= 0 ? 'Rp.0' : nominal}
+            style={styles.nominal}
+          />
         </View>
       </View>
     </TouchableOpacity>

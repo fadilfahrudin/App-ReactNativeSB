@@ -1,8 +1,8 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {Header, StatusTransaksi} from '../../components';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {getOrderHistory, getOrders} from '../../redux/action';
+import {Header, StatusTransaksi} from '../../components';
+import {getOrders} from '../../redux/action';
 
 const DonasiSaya = ({navigation}) => {
   const dispatch = useDispatch();
@@ -12,13 +12,13 @@ const DonasiSaya = ({navigation}) => {
     dispatch(getOrders());
   }, []);
 
-  console.log('order status ', order);
+  // console.log('order status ', order);
 
   return (
     <ScrollView>
       <Header title={'Donasi Saya'} subTitle="Semangat Sedekah Bantu Sesama" />
       <Text style={styles.catatan}>Catatan Kebaikan</Text>
-      {order.length < 0 ? (
+      {order.length <= 0 ? (
         <Text style={styles.donasiNow}>
           Saat ini kamu belum menebar kebaikan{' '}
         </Text>
@@ -47,7 +47,7 @@ export default DonasiSaya;
 
 const styles = StyleSheet.create({
   catatan: {
-    marginTop: 24,
+    marginTop: 5,
     backgroundColor: 'white',
     paddingHorizontal: 24,
     paddingVertical: 12,

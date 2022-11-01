@@ -1,11 +1,19 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import Number from '../Number';
 
-const InfoCard = ({namaInfo, total}) => {
+const InfoCard = ({namaInfo, totalDonasi, total}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{namaInfo}</Text>
-      <Text style={styles.isi}>{total}</Text>
+      {total ? (
+        <Text style={styles.isi}>{total}</Text>
+      ) : (
+        <Number
+          number={totalDonasi <= 0 ? 'Rp.0' : totalDonasi}
+          style={styles.isi}
+        />
+      )}
     </View>
   );
 };

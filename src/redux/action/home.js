@@ -5,7 +5,7 @@ export const getProgramData = () => dispatch => {
   Axios.get(`${API_HOST.url}/program`)
     .then(result => {
       // console.log('Sukses :', result.data.data.data);
-      dispatch({type: 'SET_PROGRAM_PILIHAN', value: result.data.data.data});
+      dispatch({type: 'SET_PROGRAM', value: result.data.data.data});
     })
     .catch(err => {
       console.log('err :', err);
@@ -32,3 +32,14 @@ export const getProgramByTyeps = types => dispatch => {
       console.log('err :', err);
     });
 };
+
+// export const getAllProgram = dispatch => {
+//   Axios.get(`${API_HOST.url}/program`)
+//     .then(result => {
+//       console.log('res data: ', result);
+//       dispatch({type: 'SET_PROGRAM', value: result.data.data.data});
+//     })
+//     .catch(err => {
+//       console.log('error', err);
+//     });
+// };

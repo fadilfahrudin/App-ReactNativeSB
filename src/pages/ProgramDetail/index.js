@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
+  Share,
 } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import {IcBackWhite, IcCeklist} from '../../asset';
@@ -74,6 +75,27 @@ const ProgramDetail = ({navigation, route}) => {
     });
   }, []);
 
+  //share
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Yuk, kita dukung program ${title} dengan cara share program ini: https://www.semangatbantu.com/sedekahsubuh?ref=apps`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   //html deskripsi
   const source = {
     html: `${description}`,
@@ -105,14 +127,14 @@ const ProgramDetail = ({navigation, route}) => {
       bank_transfer: 'midtrans',
     };
 
-    console.log('data transaksi: ', data);
+    // console.log('data transaksi: ', data);
     Axios.post(`${API_HOST.url}/checkout`, data, {
       headers: {
         Authorization: token,
       },
     })
       .then(response => {
-        console.log('checkout success', response.data.data);
+        // console.log('checkout success', response.data.data);
         setIsPaymentOpen(true);
         setPaymentURL(response.data.data.payment_url);
       })
@@ -122,11 +144,12 @@ const ProgramDetail = ({navigation, route}) => {
   };
 
   const OnNavChange = state => {
-    console.log('nav: ', state);
+    // console.log('nav: ', state);
     const titleWeb = 'Laravel';
-
     if (state.title === titleWeb) {
-      navigation.replace('MainApp', {screen: 'Donasi Saya'});
+      setTimeout(() => {
+        navigation.replace('MainApp', {screen: 'Donasi Saya'});
+      }, 5000);
     }
   };
 
@@ -148,6 +171,7 @@ const ProgramDetail = ({navigation, route}) => {
       </>
     );
   }
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView stickyHeaderIndices={[1]}>
@@ -186,7 +210,10 @@ const ProgramDetail = ({navigation, route}) => {
 
             <View style={styles.containerInfoNominal}>
               <Text style={styles.lableNominal}>Terkumpul</Text>
-              <Number number={collage_amount} style={styles.nominal} />
+              <Number
+                number={collage_amount <= 0 ? 'Rp.0' : collage_amount}
+                style={styles.nominal}
+              />
               <Text style={styles.infoNominal}>Dari</Text>
               <Number number={target_amount} style={styles.infoNominal} />
             </View>
@@ -262,6 +289,7 @@ const ProgramDetail = ({navigation, route}) => {
           width={100}
           height={50}
           elevation={5}
+          onPress={onShare}
         />
         <Button
           text={'Donasi'}
@@ -296,15 +324,15 @@ const styles = StyleSheet.create({
   headlineContainer: {
     backgroundColor: 'white',
     marginTop: -60,
-    paddingHorizontal: 30,
+    paddingHorizontal: 10,
     paddingTop: 48,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
   },
   bodyContainer: {
     backgroundColor: 'white',
-    paddingBottom: 100,
-    paddingHorizontal: 30,
+    paddingBottom: 10,
+    paddingHorizontal: 10,
     // alignItems: 'center',
   },
   judul: {fontFamily: 'Roboto-Bold', fontSize: 18},
@@ -327,7 +355,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
   },
-  p: {marginBottom: -50},
 
   modalContainer: {
     margin: 0,

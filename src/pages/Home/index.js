@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -8,15 +9,36 @@ import {
   InfoCard,
   ProgramCard,
 } from '../../components';
-import {getProgramByTyeps} from '../../redux/action';
+import {getProgramByTyeps, getProgramData} from '../../redux/action';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
-  const {program_pilihan} = useSelector(state => state.homeReducer);
+  const nav = useNavigation();
+  const {program_pilihan, program} = useSelector(state => state.homeReducer);
 
   useEffect(() => {
-    dispatch(getProgramByTyeps('program_pilihan'));
+    nav.addListener('focus', () => {
+      dispatch(getProgramByTyeps('program_pilihan'));
+    });
   }, []);
+
+  useEffect(() => {
+    nav.addListener('focus', () => {
+      dispatch(getProgramData());
+    });
+  }, []);
+
+  console.log('program total: ', program);
+
+  const sumCollageAmount = program => {
+    let sum = 0;
+    for (let i = 0; i < program.length; i++) {
+      sum += program[i].collage_amount;
+    }
+    return sum;
+  };
+
+  // console.log('test :', sumCollageAmount(program));
 
   return (
     <View style={styles.page}>
@@ -49,12 +71,12 @@ const Home = ({navigation}) => {
       <View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.infoCardContainer}>
+            <InfoCard namaInfo="Program Tersedia" total={program.length} />
             <InfoCard
-              namaInfo="Program Tersedia"
-              total={program_pilihan.length}
+              namaInfo="Jumlah Donasi"
+              totalDonasi={sumCollageAmount(program)}
             />
-            <InfoCard namaInfo="Jumlah Donasi" total="Rp.70.000.000" />
-            <InfoCard namaInfo="Penerima Manfaat" total={100} />
+            <InfoCard namaInfo="Penerima Manfaat" total={1000} />
           </View>
         </ScrollView>
       </View>

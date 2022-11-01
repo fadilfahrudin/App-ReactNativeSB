@@ -33,7 +33,9 @@ const banyakDiminati = () => {
   const dispatch = useDispatch();
   const {banyak_diminati} = useSelector(state => state.homeReducer);
   useEffect(() => {
-    dispatch(getProgramByTyeps('banyak_diminati'));
+    navigation.addListener('focus', () => {
+      dispatch(getProgramByTyeps('banyak_diminati'));
+    });
   }, []);
 
   return (
@@ -59,7 +61,9 @@ const programBaru = () => {
   const dispatch = useDispatch();
   const {program_baru} = useSelector(state => state.homeReducer);
   useEffect(() => {
+    // navigation.addListener('focus', () => {
     dispatch(getProgramByTyeps('program_baru'));
+    // });
   }, []);
 
   return (
