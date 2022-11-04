@@ -12,6 +12,8 @@ import CallApiVanilaJs from './CallApiValinaJs';
 import CallApiAxios from './CallApiAxios';
 import LocalAPI from './LocalAPI';
 import DetailProfile from './DetailProfile';
+import News from './News';
+import NewsDetail from './NewsDetail';
 
 export {
   SplashScreen,
@@ -28,4 +30,6 @@ export {
   CallApiAxios,
   LocalAPI,
   DetailProfile,
+  News,
+  NewsDetail,
 };

@@ -16,7 +16,7 @@ const StatusTransaksi = ({image, judul, waktu, status, nominal, onPress}) => {
     }
   };
 
-  const formatedDate = moment(waktu).format('ddd, DD MMM YYYY');
+  const formatedDate = moment(waktu).format('DD MMM YYYY');
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.mainContent}>

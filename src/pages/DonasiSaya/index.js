@@ -12,7 +12,7 @@ const DonasiSaya = ({navigation}) => {
     dispatch(getOrders());
   }, []);
 
-  // console.log('order status ', order);
+  console.log('order status ', order);
 
   return (
     <ScrollView>

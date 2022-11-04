@@ -27,9 +27,9 @@ const Home = ({navigation}) => {
       dispatch(getProgramData());
     });
   }, []);
+  // console.log('program total: ', program);
 
-  console.log('program total: ', program);
-
+  //hitung total donasi all program
   const sumCollageAmount = program => {
     let sum = 0;
     for (let i = 0; i < program.length; i++) {
@@ -37,7 +37,6 @@ const Home = ({navigation}) => {
     }
     return sum;
   };
-
   // console.log('test :', sumCollageAmount(program));
 
   return (

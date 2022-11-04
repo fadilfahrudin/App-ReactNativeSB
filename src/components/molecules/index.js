@@ -12,6 +12,7 @@ import ItemsListMenu from './ItemsListMenu';
 import Loading from './Loading';
 import Number from './Number';
 import ProgressBarr from './ProgressBar';
+import NewsCard from './NewsCard';
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   Loading,
   Number,
   ProgressBarr,
+  NewsCard,
 };

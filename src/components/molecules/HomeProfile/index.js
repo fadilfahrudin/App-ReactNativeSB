@@ -1,8 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {LogoHeader} from '../../../asset';
-import {getData} from '../../../utils/storage';
+import {DummyProgram, LogoHeader} from '../../../asset';
+import {getData} from '../../../utils';
 
 const HomeProfile = () => {
   const navigation = useNavigation();
@@ -11,17 +11,18 @@ const HomeProfile = () => {
   useEffect(() => {
     navigation.addListener('focus', () => {
       getData('userProfile').then(result => {
-        // console.log('user profile :', result);
         setPhoto({uri: result.profile_photo_url});
       });
     });
   }, [navigation]);
 
+  console.log('? :', photo);
+
   return (
     <View style={styles.container}>
       <LogoHeader width={100} />
       <View style={styles.profileFrame}>
-        <Image source={photo} style={styles.profile} />
+        <Image style={styles.profile} source={photo} />
       </View>
     </View>
   );

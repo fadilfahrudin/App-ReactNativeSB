@@ -20,7 +20,7 @@ const SignUp = ({navigation}) => {
 
   const onSubmit = () => {
     dispatch({type: 'SET_REGISTER', value: form});
-    console.log('form :', form);
+    // console.log('form :', form);
     dispatch(setLoading(true));
     dispatch(signUpAction(form, navigation));
   };

@@ -14,10 +14,6 @@ import {Button, Gap, Header, Loading, Number} from '../../components';
 const OrderSummary = ({route, navigation}) => {
   const order = route.params;
   const [showWebView, setShowWebView] = useState(false);
-  // state = {showWebView: false};
-  // const {showWebView} = this.state;
-
-  console.log('order detail :', order);
 
   const renderContent = () => {
     switch (order.status) {
@@ -31,7 +27,7 @@ const OrderSummary = ({route, navigation}) => {
   };
 
   const OnNavChange = state => {
-    console.log('nav: ', state);
+    // console.log('nav: ', state);
     const titleWeb = 'Laravel';
 
     if (state.title === titleWeb) {
@@ -89,12 +85,23 @@ const OrderSummary = ({route, navigation}) => {
                   number={order.amount_final}
                 />
               </View>
-              <Button
-                text={'Bayar Sekarang'}
-                width={150}
-                height={45}
-                onPress={() => setShowWebView(true)}
-              />
+              {order.status === 'success' ? (
+                <Button
+                  disabled={true}
+                  text={'Terbayar'}
+                  width={150}
+                  height={45}
+                  onPress={() => setShowWebView(true)}
+                  color={'#7392D4'}
+                />
+              ) : (
+                <Button
+                  text={'Bayar Sekarang'}
+                  width={150}
+                  height={45}
+                  onPress={() => setShowWebView(true)}
+                />
+              )}
             </View>
           </View>
 

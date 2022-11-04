@@ -14,6 +14,8 @@ import {
   CallApiAxios,
   LocalAPI,
   DetailProfile,
+  News,
+  NewsDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -91,6 +93,18 @@ const Router = () => {
       <Stack.Screen
         name="Detail Profile"
         component={DetailProfile}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="News"
+        component={News}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="News Detail"
+        component={NewsDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -9,9 +9,10 @@ const Button = ({
   width,
   height,
   elevation,
+  disabled,
 }) => {
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.9} disabled={disabled} onPress={onPress}>
       <View style={styles.container(color, width, height, elevation)}>
         <Text style={styles.text(textColor)}>{text}</Text>
       </View>

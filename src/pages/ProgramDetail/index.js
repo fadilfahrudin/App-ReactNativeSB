@@ -111,6 +111,14 @@ const ProgramDetail = ({navigation, route}) => {
     bank_transfer: '',
   });
 
+  const onNews = () => {
+    const data = {
+      program_id: id,
+      title,
+    };
+    navigation.navigate('News', data);
+  };
+
   const onSubmit = () => {
     const data = {
       program_id: id,
@@ -220,8 +228,24 @@ const ProgramDetail = ({navigation, route}) => {
           </View>
         </View>
 
+        {/* Body  */}
         <View style={styles.bodyContainer}>
-          <Text style={{fontWeight: 'bold'}}>Deskripsi</Text>
+          <View style={styles.menuView}>
+            <Text style={{fontWeight: 'bold', marginRight: 10}}>Deskripsi</Text>
+            <TouchableOpacity onPress={onNews}>
+              <Text
+                style={{
+                  backgroundColor: '#0050FF',
+                  borderRadius: 5,
+                  color: 'white',
+                  padding: 5,
+                  fontFamily: 'Poppins-Reguler',
+                  fontWeight: 'bold',
+                }}>
+                Berita
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               // backgroundColor: 'yellow',
@@ -367,5 +391,11 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     flexGrow: 1,
+  },
+
+  menuView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // justifyContent: 'space-between',
   },
 });
