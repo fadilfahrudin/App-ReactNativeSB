@@ -111,6 +111,11 @@ const ProgramDetail = ({navigation, route}) => {
     bank_transfer: '',
   });
 
+  const closeModal = () => {
+    setForm('doa_donatur', '');
+    setModalVisible(false);
+  };
+
   const onNews = () => {
     const data = {
       program_id: id,
@@ -118,6 +123,8 @@ const ProgramDetail = ({navigation, route}) => {
     };
     navigation.navigate('News', data);
   };
+
+  const [message, setMessage] = useState(false);
 
   const onSubmit = () => {
     const data = {
@@ -134,6 +141,14 @@ const ProgramDetail = ({navigation, route}) => {
       status: 'pending',
       bank_transfer: 'midtrans',
     };
+
+    if (form.amount_final === '') {
+      setMessage(true);
+
+      setTimeout(() => {
+        setMessage(false);
+      }, 3000);
+    }
 
     // console.log('data transaksi: ', data);
     Axios.post(`${API_HOST.url}/checkout`, data, {
@@ -257,12 +272,13 @@ const ProgramDetail = ({navigation, route}) => {
         </View>
 
         <Modal
-          onSwipeComplete={() => setModalVisible(false)}
+          onSwipeComplete={closeModal}
           isVisible={isModalVisible}
           swipeDirection="down"
           swipeThreshold={220}
           animationInTiming={1000}
           propagateSwipe
+          onModalHide={() => setForm('amount_final', '')}
           style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View
@@ -282,19 +298,25 @@ const ProgramDetail = ({navigation, route}) => {
                   fontSize: 20,
                   alignSelf: 'center',
                 }}>
-                Masukan Nominal Donasi
+                Tentukan donasi terbaikmu
               </Text>
+
               <TextInput
+                label={
+                  message ? (
+                    <Text style={styles.dangger}>Masukan nominal donasi</Text>
+                  ) : null
+                }
                 placeholder="Rp"
                 keyboardType={'numeric'}
                 value={form.amount_final}
                 onChangeText={value => setForm('amount_final', value)}
               />
-              <Text>Min. donasi sebesar Rp1.000</Text>
+              <Text>Min. donasi sebesar Rp5.000</Text>
               <Gap height={15} />
               <TextArea
                 lable="Kirim Do'a"
-                placeholder="titipkan doa terbaikmu.."
+                placeholder="Sampaikan doa terbaikmu.."
                 value={form.doa_donatur}
                 onChangeText={value => setForm('doa_donatur', value)}
               />
@@ -396,6 +418,10 @@ const styles = StyleSheet.create({
   menuView: {
     flexDirection: 'row',
     alignItems: 'center',
-    // justifyContent: 'space-between',
+  },
+
+  dangger: {
+    color: 'red',
+    paddingTop: 10,
   },
 });

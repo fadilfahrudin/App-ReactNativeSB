@@ -16,8 +16,6 @@ const HomeProfile = () => {
     });
   }, [navigation]);
 
-  console.log('? :', photo);
-
   return (
     <View style={styles.container}>
       <LogoHeader width={100} />

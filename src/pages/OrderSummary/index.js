@@ -94,12 +94,22 @@ const OrderSummary = ({route, navigation}) => {
                   onPress={() => setShowWebView(true)}
                   color={'#7392D4'}
                 />
+              ) : order.status === 'expired' ? (
+                <Button
+                  disabled={true}
+                  text={'Kadaluarsa'}
+                  width={150}
+                  height={45}
+                  onPress={() => setShowWebView(true)}
+                  color={'red'}
+                />
               ) : (
                 <Button
                   text={'Bayar Sekarang'}
                   width={150}
                   height={45}
                   onPress={() => setShowWebView(true)}
+                  color={'#0050FF'}
                 />
               )}
             </View>
