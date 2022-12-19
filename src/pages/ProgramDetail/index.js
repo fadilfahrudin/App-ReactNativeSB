@@ -107,6 +107,7 @@ const ProgramDetail = ({navigation, route}) => {
         // dismissed
       }
     } catch (error) {
+      // eslint-disable-next-line no-alert
       alert(error.message);
     }
   };
