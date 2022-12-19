@@ -1,8 +1,6 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {DummyProgram} from '../../../asset';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Number from '../Number';
-import moment from 'moment';
 
 const NewsCard = ({danaPencairan, tglDistribusi, title, picture, onPress}) => {
   //   const formatedDate = moment(tglDistribusi).format('ddd, DD MMM YYYY');
@@ -16,7 +14,6 @@ const NewsCard = ({danaPencairan, tglDistribusi, title, picture, onPress}) => {
               <View>
                 <Text>Pencairan Dana</Text>
                 <Number number={danaPencairan} />
-                {/* <Text>Rp.100.000</Text> */}
               </View>
               <Text>{tglDistribusi}</Text>
             </View>

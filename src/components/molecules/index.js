@@ -13,6 +13,7 @@ import Loading from './Loading';
 import Number from './Number';
 import ProgressBarr from './ProgressBar';
 import NewsCard from './NewsCard';
+import HeadlineProgramInfo from './HeadlineProgramInfo';
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   Number,
   ProgressBarr,
   NewsCard,
+  HeadlineProgramInfo,
 };
