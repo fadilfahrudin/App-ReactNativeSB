@@ -12,8 +12,6 @@ const DonasiSaya = ({navigation}) => {
     dispatch(getOrders());
   }, []);
 
-  console.log('order status ', order);
-
   return (
     <ScrollView>
       <Header title={'Donasi Saya'} subTitle="Semangat Sedekah Bantu Sesama" />

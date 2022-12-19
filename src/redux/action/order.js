@@ -10,7 +10,12 @@ export const getOrders = () => dispatch => {
       },
     })
       .then(res => {
-        // console.log('get orders: ', res.data);
+        console.log(
+          'get orders: ',
+          res.data.data.data.sort((a, b) => {
+            return a.id - b.id;
+          }),
+        );
         dispatch({type: 'SET_ORDER', value: res.data.data.data});
       })
       .catch(err => {
