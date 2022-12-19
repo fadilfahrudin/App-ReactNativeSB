@@ -11,18 +11,19 @@ import {
   useWindowDimensions,
   View,
   Share,
+  Switch,
 } from 'react-native';
 import RenderHTML from 'react-native-render-html';
-import {IcBackWhite, IcCeklist} from '../../asset';
+import {IcBackWhite} from '../../asset';
 import {
   Button,
   Gap,
-  Number,
-  ProgressBarr,
   TextInput,
   TextArea,
   Loading,
   Header,
+  HeadlineProgramInfo,
+  // Switch,
 } from '../../components';
 import {getData, useForm} from '../../utils';
 import Modal from 'react-native-modal';
@@ -62,15 +63,29 @@ const ProgramDetail = ({navigation, route}) => {
 
   useEffect(() => {
     getData('userProfile').then(result => {
-      // console.log('user :', result);
       setUserProfile(result);
     });
   }, []);
 
+  // Toggle Switch Anonim Function
+  const [isAnonim, setAnonim] = useState(false);
+  const [isEnable, setIsEnable] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnable(previouseState => !previouseState);
+
+    if (isEnable === false) {
+      // ketika isEnable false dan toggle onpush  menjadi => true
+      setAnonim('Anonim');
+    } else {
+      // ketika isEnable True dan toggle onpush  menjadi => false
+      setAnonim(userProfile.name);
+    }
+    return isAnonim;
+  };
+
   //get Token
   useEffect(() => {
     getData('token').then(result => {
-      // console.log('token: ', result);
       setToken(result.value);
     });
   }, []);
@@ -111,11 +126,15 @@ const ProgramDetail = ({navigation, route}) => {
     bank_transfer: '',
   });
 
+  // Clsose Modal
   const closeModal = () => {
     setForm('doa_donatur', '');
     setModalVisible(false);
+    setIsEnable(false);
+    setAnonim(false);
   };
 
+  // Button Berita
   const onNews = () => {
     const data = {
       program_id: id,
@@ -124,8 +143,10 @@ const ProgramDetail = ({navigation, route}) => {
     navigation.navigate('News', data);
   };
 
+  // Message
   const [message, setMessage] = useState(false);
 
+  // On Submit Function
   const onSubmit = () => {
     const data = {
       program_id: id,
@@ -134,7 +155,7 @@ const ProgramDetail = ({navigation, route}) => {
       banner_program: banner_program,
       user_id: userProfile.id,
       phone_user: userProfile.no_wa,
-      user_name: userProfile.name,
+      user_name: isAnonim,
       user_email: userProfile.email,
       amount_final: form.amount_final,
       doa_donatur: form.doa_donatur,
@@ -150,14 +171,13 @@ const ProgramDetail = ({navigation, route}) => {
       }, 3000);
     }
 
-    // console.log('data transaksi: ', data);
+    // send to API
     Axios.post(`${API_HOST.url}/checkout`, data, {
       headers: {
         Authorization: token,
       },
     })
       .then(response => {
-        // console.log('checkout success', response.data.data);
         setIsPaymentOpen(true);
         setPaymentURL(response.data.data.payment_url);
       })
@@ -166,13 +186,14 @@ const ProgramDetail = ({navigation, route}) => {
       });
   };
 
+  // ketika state navigasi berubah
   const OnNavChange = state => {
     // console.log('nav: ', state);
     const titleWeb = 'Laravel';
     if (state.title === titleWeb) {
       setTimeout(() => {
         navigation.replace('MainApp', {screen: 'Donasi Saya'});
-      }, 5000);
+      }, 500);
     }
   };
 
@@ -204,69 +225,28 @@ const ProgramDetail = ({navigation, route}) => {
               style={styles.icBack}
               onPress={() => navigation.goBack()}>
               <IcBackWhite />
-              <Text style={{color: 'white', marginLeft: 5}}>Kembali</Text>
+              <Text style={styles.kembali}>Kembali</Text>
             </TouchableOpacity>
           </ImageBackground>
         </View>
 
-        <View style={styles.headlineContainer}>
-          <View>
-            <Text style={styles.judul}>{title}</Text>
-            <Gap height={14} />
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View>
-                <Text style={styles.lable}>Pemilik Program</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={styles.by}>{program_by}</Text>
-                  <IcCeklist style={{marginLeft: 2}} />
-                </View>
-              </View>
-              <Text>{formatDate} hari lagi</Text>
-            </View>
-            <Gap height={5} />
-            <ProgressBarr max={target_amount} value={collage_amount} />
-
-            <View style={styles.containerInfoNominal}>
-              <Text style={styles.lableNominal}>Terkumpul</Text>
-              <Number
-                number={collage_amount <= 0 ? 'Rp.0' : collage_amount}
-                style={styles.nominal}
-              />
-              <Text style={styles.infoNominal}>Dari</Text>
-              <Number number={target_amount} style={styles.infoNominal} />
-            </View>
-          </View>
-        </View>
+        <HeadlineProgramInfo
+          title={title}
+          collage_amount={collage_amount}
+          formatDate={formatDate}
+          program_by={program_by}
+          target_amount={target_amount}
+        />
 
         {/* Body  */}
         <View style={styles.bodyContainer}>
           <View style={styles.menuView}>
-            <Text style={{fontWeight: 'bold', marginRight: 10}}>Deskripsi</Text>
+            <Text style={styles.deskripsi}>Deskripsi</Text>
             <TouchableOpacity onPress={onNews}>
-              <Text
-                style={{
-                  backgroundColor: '#0050FF',
-                  borderRadius: 5,
-                  color: 'white',
-                  padding: 5,
-                  fontFamily: 'Poppins-Reguler',
-                  fontWeight: 'bold',
-                }}>
-                Berita
-              </Text>
+              <Text style={styles.berita}>Berita</Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              // backgroundColor: 'yellow',
-              width: '100%',
-              overflow: 'hidden',
-            }}>
+          <View style={styles.contentDeskripsi}>
             <RenderHTML source={source} contentWidth={width} />
           </View>
         </View>
@@ -279,25 +259,12 @@ const ProgramDetail = ({navigation, route}) => {
           animationInTiming={1000}
           propagateSwipe
           onModalHide={() => setForm('amount_final', '')}
+          onModalShow={() => setAnonim(userProfile.name)}
           style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <View
-              style={{
-                height: 2,
-                width: 70,
-                backgroundColor: 'black',
-                alignSelf: 'center',
-              }}
-            />
+            <View style={styles.lineModal} />
             <ScrollView>
-              <Text
-                style={{
-                  color: 'black',
-                  marginTop: 20,
-                  fontWeight: 'bold',
-                  fontSize: 20,
-                  alignSelf: 'center',
-                }}>
+              <Text style={styles.headlineModal}>
                 Tentukan donasi terbaikmu
               </Text>
 
@@ -320,8 +287,16 @@ const ProgramDetail = ({navigation, route}) => {
                 value={form.doa_donatur}
                 onChangeText={value => setForm('doa_donatur', value)}
               />
-              <Gap height={25} />
-
+              <View style={styles.switchContainer}>
+                <Text>Sembunyikan nama saya (Anonim)</Text>
+                <Switch
+                  trackColor={{false: '#7392D4', true: '#0050FF'}}
+                  thumbColor={isEnable ? '#0D3DA5' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isEnable}
+                />
+              </View>
               <Button text="Lanjutkan Donasi" onPress={onSubmit} />
             </ScrollView>
           </View>
@@ -356,7 +331,7 @@ const styles = StyleSheet.create({
   page: {
     flex: 1,
   },
-  cover: {height: 330},
+  cover: {height: 250},
   lable: {fontFamily: 'Roboto-Reguler', marginBottom: 1, fontSize: 10},
   by: {fontFamily: 'Roboto-Bold', fontSize: 10},
   isiLable: {fontFamily: 'Roboto-Bold', fontSize: 10},
@@ -423,5 +398,39 @@ const styles = StyleSheet.create({
   dangger: {
     color: 'red',
     paddingTop: 10,
+  },
+  deskripsi: {fontWeight: 'bold', marginRight: 10},
+  berita: {
+    backgroundColor: '#0050FF',
+    borderRadius: 5,
+    color: 'white',
+    padding: 5,
+    fontFamily: 'Poppins-Reguler',
+    fontWeight: 'bold',
+  },
+  contentDeskripsi: {
+    // backgroundColor: 'yellow',
+    width: '100%',
+    overflow: 'hidden',
+  },
+  kembali: {color: 'white', marginLeft: 5},
+  lineModal: {
+    height: 2,
+    width: 70,
+    backgroundColor: 'black',
+    alignSelf: 'center',
+  },
+  headlineModal: {
+    color: 'black',
+    marginTop: 20,
+    fontWeight: 'bold',
+    fontSize: 20,
+    alignSelf: 'center',
+  },
+  switchContainer: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
   },
 });
