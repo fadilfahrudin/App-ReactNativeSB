@@ -13,7 +13,9 @@ const SignIn = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  //dns ip dari android 10.0.2.2 dan port localhost 8000
+  //note:
+  //dns ip dari android 10.0.2.2
+
   const onSubmit = () => {
     dispatch(signInAction(form, navigation));
   };

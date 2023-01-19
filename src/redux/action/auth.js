@@ -2,7 +2,7 @@ import Axios from 'axios';
 import {getData, showMessage, storeData} from '../../utils';
 import {setLoading} from '../../redux/action/global';
 import {API_HOST} from '../../config';
-import {useEffect} from 'react';
+// import {useEffect} from 'react';
 
 export const signUpAction = (dataRegister, navigation) => dispatch => {
   Axios.post(`${API_HOST.url}/register`, dataRegister)
@@ -27,6 +27,7 @@ export const signUpAction = (dataRegister, navigation) => dispatch => {
 
 export const signInAction = (form, navigation) => dispatch => {
   dispatch(setLoading(true));
+  // fetching API
   Axios.post(`${API_HOST.url}/login`, form)
     .then(result => {
       const token = `${result.data.data.token_type} ${result.data.data.access_token}`;
@@ -36,7 +37,7 @@ export const signInAction = (form, navigation) => dispatch => {
       storeData('token', {value: token});
       storeData('userProfile', userProfile);
       navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
-      console.log('success', result);
+      // console.log('success', result);
     })
     .catch(err => {
       console.log('error', err.response.data);
