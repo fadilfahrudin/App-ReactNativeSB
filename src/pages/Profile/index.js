@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 import {Gap, Header, ItemsListMenu} from '../../components';
 import {getData} from '../../utils';
@@ -73,35 +74,36 @@ const Profile = ({navigation}) => {
         <Gap height={10} />
         <Text style={styles.nama}>{userProfile.name}</Text>
       </View>
-
-      <View style={styles.containerMenu}>
-        <Text style={styles.titleSection}>Akun Saya</Text>
-        <View style={styles.bodySection}>
-          <ItemsListMenu
-            nama="Profile Saya"
-            onPres={() => navigation.navigate('Detail Profile')}
-          />
+      <ScrollView>
+        <View style={styles.containerMenu}>
+          <Text style={styles.titleSection}>Akun Saya</Text>
+          <View style={styles.bodySection}>
+            <ItemsListMenu
+              nama="Profile Saya"
+              onPres={() => navigation.navigate('Detail Profile')}
+            />
+          </View>
+          <Text style={styles.titleSection}>Seputar Semangat Bantu</Text>
+          <View style={styles.bodySection}>
+            <ItemsListMenu
+              nama="Tentang Semangat Bantu"
+              onPres={() => onWeb('About')}
+            />
+            <ItemsListMenu
+              nama="Syarat dan Ketentuan"
+              onPres={() => onWeb('s&k')}
+            />
+            <ItemsListMenu
+              nama="Kebijakan Privasi"
+              onPres={() => onWeb('kebijakanPrivasi')}
+            />
+            <ItemsListMenu nama="Legalitas" onPres={() => onWeb('legalitas')} />
+            <ItemsListMenu nama="Tim Kami" onPres={() => onWeb('tim')} />
+          </View>
+          <Gap height={15} />
+          <ItemsListMenu nama="Keluar" color="red" onPres={signOut} />
         </View>
-        <Text style={styles.titleSection}>Seputar Semangat Bantu</Text>
-        <View style={styles.bodySection}>
-          <ItemsListMenu
-            nama="Tentang Semangat Bantu"
-            onPres={() => onWeb('About')}
-          />
-          <ItemsListMenu
-            nama="Syarat dan Ketentuan"
-            onPres={() => onWeb('s&k')}
-          />
-          <ItemsListMenu
-            nama="Kebijakan Privasi"
-            onPres={() => onWeb('kebijakanPrivasi')}
-          />
-          <ItemsListMenu nama="Legalitas" onPres={() => onWeb('legalitas')} />
-          <ItemsListMenu nama="Tim Kami" onPres={() => onWeb('tim')} />
-        </View>
-        <Gap height={15} />
-        <ItemsListMenu nama="Keluar" color="red" onPres={signOut} />
-      </View>
+      </ScrollView>
     </View>
   );
 };

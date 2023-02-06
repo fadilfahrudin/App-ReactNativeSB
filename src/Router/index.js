@@ -36,12 +36,12 @@ const Router = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="SplashScreen" //option untuk menyembunyikan halaman yang saat ini
+        name="SplashScreen"
         component={SplashScreen} //ambil dari component Splash Screen
         options={{headerShown: false}} //option untuk menyembunyikan halaman yang saat ini
       />
       <Stack.Screen
-        name="SignIn" //option untuk menyembunyikan halaman yang saat ini
+        name="SignIn"
         component={SignIn} //ambil dari component SignIn
         options={{headerShown: false}} //option untuk menyembunyikan halaman yang saat ini
       />
