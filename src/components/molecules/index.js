@@ -14,6 +14,7 @@ import Number from './Number';
 import ProgressBarr from './ProgressBar';
 import NewsCard from './NewsCard';
 import HeadlineProgramInfo from './HeadlineProgramInfo';
+import Popup from './Popup';
 
 export {
   Header,
@@ -32,4 +33,5 @@ export {
   ProgressBarr,
   NewsCard,
   HeadlineProgramInfo,
+  Popup,
 };

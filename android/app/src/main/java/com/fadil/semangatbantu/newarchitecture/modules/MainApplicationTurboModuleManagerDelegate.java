@@ -1,4 +1,4 @@
-package com.semangatbantu.newarchitecture.modules;
+package com.fadil.semangatbantu.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

@@ -1,4 +1,4 @@
-package com.semangatbantu.newarchitecture;
+package com.fadil.semangatbantu.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.semangatbantu.BuildConfig;
-import com.semangatbantu.newarchitecture.components.MainComponentsRegistry;
-import com.semangatbantu.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.fadil.semangatbantu.BuildConfig;
+import com.fadil.semangatbantu.newarchitecture.components.MainComponentsRegistry;
+import com.fadil.semangatbantu.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

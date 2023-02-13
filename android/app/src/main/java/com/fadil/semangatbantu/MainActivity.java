@@ -1,4 +1,4 @@
-package com.semangatbantu;
+package com.fadil.semangatbantu;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
